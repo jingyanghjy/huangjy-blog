@@ -1,3 +1,6 @@
+smartTOC = true
+smartTOCHideUnfocusedChildren = false
+
 colorScheme = "slate"
 defaultAppearance = "light"
 autoSwitchAppearance = true

@@ -1889,3 +1889,702 @@ main > header .text-neutral-500 {
   color: inherit !important;
   text-decoration: none !important;
 }
+
+/* ==========================================================
+   Huang JY Tech Effects
+   ========================================================== */
+
+:root {
+  --hj-scroll-progress: 0%;
+  --hj-mouse-x: 50vw;
+  --hj-mouse-y: 30vh;
+
+  --hj-glow-primary: rgba(99, 102, 241, 0.18);
+  --hj-glow-secondary: rgba(14, 165, 233, 0.13);
+  --hj-glow-accent: rgba(168, 85, 247, 0.10);
+
+  --hj-card-glow: rgba(99, 102, 241, 0.16);
+  --hj-shine: rgba(255, 255, 255, 0.42);
+}
+
+html.dark {
+  --hj-glow-primary: rgba(99, 102, 241, 0.22);
+  --hj-glow-secondary: rgba(6, 182, 212, 0.15);
+  --hj-glow-accent: rgba(168, 85, 247, 0.13);
+
+  --hj-card-glow: rgba(129, 140, 248, 0.20);
+  --hj-shine: rgba(255, 255, 255, 0.10);
+}
+
+/* 保证装饰层不会影响点击 */
+body {
+  position: relative;
+  isolation: isolate;
+}
+
+/* ==========================================================
+   顶部阅读进度光条
+   ========================================================== */
+
+#hj-scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+
+  width: var(--hj-scroll-progress);
+  height: 3px;
+
+  background: linear-gradient(
+    90deg,
+    #6366f1,
+    #8b5cf6,
+    #06b6d4
+  );
+
+  border-radius: 0 999px 999px 0;
+
+  box-shadow:
+    0 0 12px rgba(99, 102, 241, 0.75),
+    0 0 22px rgba(6, 182, 212, 0.38);
+
+  transition: width 0.08s linear;
+  pointer-events: none;
+}
+
+/* ==========================================================
+   背景动态柔光
+   ========================================================== */
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+
+  background:
+    radial-gradient(
+      42rem 32rem at 10% 5%,
+      var(--hj-glow-primary),
+      transparent 72%
+    ),
+    radial-gradient(
+      38rem 30rem at 90% 12%,
+      var(--hj-glow-secondary),
+      transparent 72%
+    ),
+    radial-gradient(
+      34rem 28rem at 60% 92%,
+      var(--hj-glow-accent),
+      transparent 75%
+    );
+
+  background-repeat: no-repeat;
+  pointer-events: none;
+
+  animation: hjBackgroundFloat 16s ease-in-out infinite alternate;
+}
+
+/* 极淡颗粒层 */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+
+  opacity: 0.025;
+
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+
+  pointer-events: none;
+}
+
+html.dark body::after {
+  opacity: 0.04;
+}
+
+@keyframes hjBackgroundFloat {
+  0% {
+    background-position:
+      0 0,
+      0 0,
+      0 0;
+  }
+
+  100% {
+    background-position:
+      35px 20px,
+      -35px 24px,
+      20px -28px;
+  }
+}
+
+/* ==========================================================
+   鼠标跟随柔光
+   ========================================================== */
+
+#hj-cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+
+  width: 440px;
+  height: 440px;
+
+  background: radial-gradient(
+    circle,
+    rgba(99, 102, 241, 0.11),
+    rgba(14, 165, 233, 0.055) 38%,
+    transparent 72%
+  );
+
+  border-radius: 50%;
+  filter: blur(8px);
+
+  opacity: 0;
+  transform:
+    translate(
+      calc(var(--hj-mouse-x) - 220px),
+      calc(var(--hj-mouse-y) - 220px)
+    );
+
+  transition:
+    opacity 0.35s ease,
+    transform 0.08s linear;
+
+  pointer-events: none;
+}
+
+html.hj-pointer-active #hj-cursor-glow {
+  opacity: 1;
+}
+
+html.dark #hj-cursor-glow {
+  background: radial-gradient(
+    circle,
+    rgba(129, 140, 248, 0.13),
+    rgba(34, 211, 238, 0.065) 38%,
+    transparent 72%
+  );
+}
+
+/* ==========================================================
+   首页头像
+   ========================================================== */
+
+main article.text-center > header img.rounded-full {
+  border: 4px solid transparent !important;
+
+  background:
+    linear-gradient(
+      rgba(255, 255, 255, 0.95),
+      rgba(255, 255, 255, 0.95)
+    ) padding-box,
+
+    conic-gradient(
+      from 25deg,
+      #6366f1,
+      #8b5cf6,
+      #06b6d4,
+      #22c55e,
+      #6366f1
+    ) border-box;
+
+  box-shadow:
+    0 18px 48px rgba(15, 23, 42, 0.14),
+    0 0 0 7px rgba(99, 102, 241, 0.055),
+    0 0 35px rgba(99, 102, 241, 0.18);
+
+  animation: hjAvatarPulse 4.8s ease-in-out infinite;
+}
+
+html.dark
+main article.text-center > header img.rounded-full {
+  background:
+    linear-gradient(
+      rgba(17, 24, 39, 0.96),
+      rgba(17, 24, 39, 0.96)
+    ) padding-box,
+
+    conic-gradient(
+      from 25deg,
+      #818cf8,
+      #c084fc,
+      #22d3ee,
+      #34d399,
+      #818cf8
+    ) border-box;
+}
+
+@keyframes hjAvatarPulse {
+  0%,
+  100% {
+    box-shadow:
+      0 18px 48px rgba(15, 23, 42, 0.14),
+      0 0 0 7px rgba(99, 102, 241, 0.045),
+      0 0 28px rgba(99, 102, 241, 0.14);
+  }
+
+  50% {
+    box-shadow:
+      0 22px 54px rgba(15, 23, 42, 0.18),
+      0 0 0 10px rgba(99, 102, 241, 0.075),
+      0 0 45px rgba(6, 182, 212, 0.22);
+  }
+}
+
+/* ==========================================================
+   首页 Huang JY 标题流光
+   ========================================================== */
+
+main article.text-center > header h1 {
+  background:
+    linear-gradient(
+      110deg,
+      var(--hj-title) 5%,
+      #4f46e5 32%,
+      #7c3aed 50%,
+      #0891b2 68%,
+      var(--hj-title) 95%
+    ) !important;
+
+  background-size: 220% 100% !important;
+  background-position: 0% 50%;
+
+  background-clip: text !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+
+  animation: hjTitleFlow 7s ease-in-out infinite;
+}
+
+@keyframes hjTitleFlow {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* 副标题两侧装饰点 */
+main article.text-center > header h2::before,
+main article.text-center > header h2::after {
+  content: "";
+  display: inline-block;
+
+  width: 5px;
+  height: 5px;
+  margin: 0 0.65rem 0.15rem;
+
+  background: linear-gradient(
+    135deg,
+    #6366f1,
+    #06b6d4
+  );
+
+  border-radius: 50%;
+
+  box-shadow:
+    0 0 0 4px rgba(99, 102, 241, 0.07),
+    0 0 12px rgba(99, 102, 241, 0.3);
+}
+
+/* ==========================================================
+   文章列表卡片：保留上浮并增加扫光
+   ========================================================== */
+
+.article-link--simple,
+.article-link--card {
+  position: relative;
+  overflow: hidden;
+
+  transform: translateZ(0);
+
+  transition:
+    transform 0.26s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.24s ease,
+    box-shadow 0.26s ease !important;
+}
+
+.article-link--simple::after,
+.article-link--card::after {
+  content: "";
+  position: absolute;
+  top: -60%;
+  left: -75%;
+  z-index: 1;
+
+  width: 42%;
+  height: 220%;
+
+  background: linear-gradient(
+    100deg,
+    transparent,
+    var(--hj-shine),
+    transparent
+  );
+
+  opacity: 0;
+  transform: rotate(12deg);
+
+  transition:
+    left 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.22s ease;
+
+  pointer-events: none;
+}
+
+.article-link--simple:hover,
+.article-link--card:hover {
+  transform:
+    translateY(-6px)
+    scale(1.006) !important;
+
+  border-color:
+    rgba(99, 102, 241, 0.31) !important;
+
+  box-shadow:
+    0 22px 50px rgba(15, 23, 42, 0.11),
+    0 6px 18px var(--hj-card-glow) !important;
+}
+
+.article-link--simple:hover::after,
+.article-link--card:hover::after {
+  left: 135%;
+  opacity: 1;
+}
+
+/* 确保扫光不会遮挡文字点击 */
+.article-link--simple > *,
+.article-link--card > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* ==========================================================
+   文章正文标题
+   ========================================================== */
+
+.article-content h2 {
+  overflow: hidden;
+}
+
+.article-content h2::after {
+  transform-origin: left center;
+
+  animation: hjHeadingLine 0.7s ease both;
+}
+
+@keyframes hjHeadingLine {
+  from {
+    opacity: 0;
+    transform: scaleX(0.12);
+  }
+
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+/* H3圆点轻微发光 */
+.article-content h3::before {
+  box-shadow:
+    0 0 0 4px rgba(8, 145, 178, 0.09),
+    0 0 14px rgba(8, 145, 178, 0.22) !important;
+}
+
+/* ==========================================================
+   元素进入视口动画
+   ========================================================== */
+
+.hj-reveal {
+  opacity: 0;
+  transform: translateY(16px);
+
+  transition:
+    opacity 0.55s ease var(--hj-reveal-delay, 0ms),
+    transform 0.55s
+      cubic-bezier(0.22, 1, 0.36, 1)
+      var(--hj-reveal-delay, 0ms);
+}
+
+.hj-reveal.hj-reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 首页初次进入动画 */
+main article.text-center > header {
+  opacity: 0;
+  transform: translateY(12px) scale(0.985);
+
+  transition:
+    opacity 0.65s ease,
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html.hj-page-ready
+main article.text-center > header {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* ==========================================================
+   阅读工具按钮增强
+   ========================================================== */
+
+#reader-tools > button {
+  overflow: hidden;
+}
+
+#reader-tools > button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    120deg,
+    transparent 15%,
+    rgba(99, 102, 241, 0.10),
+    transparent 85%
+  );
+
+  opacity: 0;
+  transform: translateX(-100%);
+
+  transition:
+    opacity 0.2s ease,
+    transform 0.5s ease;
+
+  pointer-events: none;
+}
+
+#reader-tools > button:hover::before {
+  opacity: 1;
+  transform: translateX(100%);
+}
+
+/* ==========================================================
+   手机端及低性能设备
+   ========================================================== */
+
+@media (max-width: 768px) {
+  #hj-cursor-glow {
+    display: none;
+  }
+
+  body::before {
+    animation-duration: 22s;
+  }
+
+  .article-link--simple:hover,
+  .article-link--card:hover {
+    transform: translateY(-3px) !important;
+  }
+
+  main article.text-center > header h2::before,
+  main article.text-center > header h2::after {
+    display: none;
+  }
+}
+
+/* 尊重系统关闭动画设置 */
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  main article.text-center > header img.rounded-full,
+  main article.text-center > header h1,
+  .article-content h2::after {
+    animation: none !important;
+  }
+
+  .hj-reveal,
+  main article.text-center > header {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  #hj-cursor-glow {
+    display: none !important;
+  }
+}
+
+/* ==================================================
+   智能目录：当前阅读章节渐变高亮
+   ================================================== */
+
+/* 普通目录项目 */
+#TOCView #TableOfContents a {
+  position: relative;
+  display: block;
+
+  margin: 0.18rem 0;
+  padding: 0.44rem 0.72rem 0.44rem 0.82rem;
+
+  color: rgb(100, 116, 139) !important;
+  background: transparent;
+
+  border: 1px solid transparent;
+  border-radius: 10px;
+
+  font-size: 0.86rem;
+  line-height: 1.45;
+  text-decoration: none !important;
+
+  transition:
+    color 0.2s ease,
+    background 0.24s ease,
+    border-color 0.2s ease,
+    box-shadow 0.24s ease,
+    transform 0.22s ease;
+}
+
+/* 鼠标经过 */
+#TOCView #TableOfContents a:hover {
+  color: rgb(79, 70, 229) !important;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(99, 102, 241, 0.08),
+      rgba(14, 165, 233, 0.04)
+    );
+
+  border-color: rgba(99, 102, 241, 0.13);
+
+  transform: translateX(2px);
+}
+
+/* 当前正在阅读的章节 */
+#TOCView #TableOfContents a.active {
+  color: rgb(255, 255, 255) !important;
+  font-weight: 650;
+
+  background:
+    linear-gradient(
+      110deg,
+      rgba(79, 70, 229, 0.96) 0%,
+      rgba(124, 58, 237, 0.92) 52%,
+      rgba(8, 145, 178, 0.90) 100%
+    ) !important;
+
+  border-color: rgba(129, 140, 248, 0.36);
+
+  box-shadow:
+    0 8px 20px rgba(79, 70, 229, 0.18),
+    0 2px 7px rgba(8, 145, 178, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+
+  transform: translateX(4px);
+}
+
+/* 当前章节左侧进度标记 */
+#TOCView #TableOfContents a.active::before {
+  content: "";
+
+  position: absolute;
+  top: 50%;
+  left: -0.48rem;
+
+  width: 4px;
+  height: 68%;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgb(129, 140, 248),
+      rgb(34, 211, 238)
+    );
+
+  border-radius: 999px;
+
+  box-shadow:
+    0 0 8px rgba(99, 102, 241, 0.45),
+    0 0 14px rgba(34, 211, 238, 0.25);
+
+  transform: translateY(-50%);
+}
+
+/* 当前章节右侧小光点 */
+#TOCView #TableOfContents a.active::after {
+  content: "";
+
+  position: absolute;
+  top: 50%;
+  right: 0.65rem;
+
+  width: 6px;
+  height: 6px;
+
+  background: rgb(255, 255, 255);
+  border-radius: 50%;
+
+  box-shadow:
+    0 0 0 4px rgba(255, 255, 255, 0.13),
+    0 0 10px rgba(255, 255, 255, 0.55);
+
+  transform: translateY(-50%);
+}
+
+/* 二级、三级目录保持缩进 */
+#TOCView #TableOfContents ul ul {
+  margin-top: 0.15rem;
+  padding-left: 0.72rem;
+}
+
+/* 非当前子章节稍微弱化 */
+#TOCView #TableOfContents ul ul a:not(.active) {
+  color: rgb(120, 132, 150) !important;
+  font-size: 0.82rem;
+}
+
+/* 深色模式 */
+html.dark #TOCView #TableOfContents a {
+  color: rgb(148, 163, 184) !important;
+}
+
+html.dark #TOCView #TableOfContents a:hover {
+  color: rgb(199, 210, 254) !important;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(129, 140, 248, 0.11),
+      rgba(34, 211, 238, 0.055)
+    );
+
+  border-color: rgba(129, 140, 248, 0.16);
+}
+
+html.dark #TOCView #TableOfContents a.active {
+  color: rgb(248, 250, 252) !important;
+
+  background:
+    linear-gradient(
+      110deg,
+      rgba(79, 70, 229, 0.80) 0%,
+      rgba(109, 40, 217, 0.78) 52%,
+      rgba(8, 145, 178, 0.72) 100%
+    ) !important;
+
+  border-color: rgba(165, 180, 252, 0.25);
+
+  box-shadow:
+    0 9px 24px rgba(0, 0, 0, 0.24),
+    0 0 18px rgba(99, 102, 241, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.10);
+}
+
+html.dark
+#TOCView
+#TableOfContents
+ul ul
+a:not(.active) {
+  color: rgb(122, 136, 157) !important;
+}

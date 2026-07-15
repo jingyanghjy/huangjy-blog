@@ -645,3 +645,81 @@
     }
   })();
 </script>
+
+
+
+<script>
+  (() => {
+    "use strict";
+
+    function initHjEffects() {
+      const root = document.documentElement;
+
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+
+      /* 页面加载完成 */
+      requestAnimationFrame(() => {
+        root.classList.add("hj-page-ready");
+      });
+
+      /* 元素进入视口时渐入 */
+      if (
+        !reduceMotion &&
+        "IntersectionObserver" in window
+      ) {
+        const elements = document.querySelectorAll(
+          [
+            ".article-link--simple",
+            ".article-link--card",
+            ".article-content h2",
+            ".article-content h3"
+          ].join(",")
+        );
+
+        elements.forEach((element, index) => {
+          element.classList.add("hj-reveal");
+
+          element.style.setProperty(
+            "--hj-reveal-delay",
+            `${Math.min(index, 8) * 45}ms`
+          );
+        });
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) {
+                return;
+              }
+
+              entry.target.classList.add(
+                "hj-reveal-visible"
+              );
+
+              observer.unobserve(entry.target);
+            });
+          },
+          {
+            threshold: 0.08,
+            rootMargin: "0px 0px -40px 0px"
+          }
+        );
+
+        elements.forEach((element) => {
+          observer.observe(element);
+        });
+      }
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener(
+        "DOMContentLoaded",
+        initHjEffects
+      );
+    } else {
+      initHjEffects();
+    }
+  })();
+</script>
