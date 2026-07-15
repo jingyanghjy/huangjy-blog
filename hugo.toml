@@ -1,0 +1,5 @@
+baseURL = 'https://example.org/'
+languageCode = 'zh-cn'
+title = '我的技术博客'
+theme = 'ananke'
+hasCJKLanguage = true
