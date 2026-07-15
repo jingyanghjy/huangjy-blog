@@ -1,0 +1,24 @@
+以后如何发布新文章
+	每次写文章执行：
+		cd D:\work\my-blog
+		hugo new content posts/new-article.md
+		
+	编辑：
+		content/posts/new-article.md
+		
+	确认：
+		draft = false
+	
+	本地预览：
+		hugo server -D
+		
+	确认无误后提交：
+		git add .
+		git commit -m "Add new article"
+		git push
+		
+	后续流程是：
+		git push
+			→ Cloudflare检测到新提交
+			→ 自动运行Hugo
+			→ 自动发布新网站
