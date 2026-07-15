@@ -1,0 +1,63 @@
+colorScheme = "slate"
+defaultAppearance = "light"
+autoSwitchAppearance = true
+
+enableSearch = true
+enableCodeCopy = true
+enableStyledScrollbar = true
+
+mainSections = ["posts"]
+
+[header]
+  layout = "fixed-fill-blur"
+
+[footer]
+  showMenu = true
+  showCopyright = true
+  showThemeAttribution = true
+  showAppearanceSwitcher = true
+  showScrollToTop = true
+
+[homepage]
+  layout = "profile"
+  showRecent = true
+  showRecentItems = 8
+  showMoreLink = true
+  showMoreLinkDest = "/posts/"
+  cardView = false
+  cardViewScreenWidth = false
+
+  
+  
+[article]
+  showDate = true
+  showDateUpdated = true
+  showReadingTime = true
+  showTableOfContents = true
+  showTaxonomies = true
+  showWordCount = true
+  showPagination = true
+  showZenMode = true
+  showAuthor = true
+
+[list]
+  showHero = false
+  showBreadcrumbs = true
+  showSummary = true
+  showCards = true
+
+  # false：一行一篇的纵向卡片
+  # true：多列宫格卡片
+  cardView = false
+
+  cardViewScreenWidth = false
+  groupByYear = false
+  constrainItemsWidth = false
+
+[taxonomy]
+  showTermCount = true
+  cardView = true
+
+[term]
+  groupByYear = false
+  cardView = true

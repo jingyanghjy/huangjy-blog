@@ -1,0 +1,647 @@
+<!-- 阅读过程中显示/隐藏导航栏 -->
+<button
+  id="nav-visibility-toggle"
+  type="button"
+  aria-label="隐藏导航栏"
+  aria-expanded="true"
+  title="隐藏导航栏（Alt + M）"
+>
+  <svg
+    class="nav-toggle-icon nav-toggle-hide-icon"
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+  >
+    <path
+      d="M6 15l6-6 6 6"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+
+  <svg
+    class="nav-toggle-icon nav-toggle-show-icon"
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+  >
+    <path
+      d="M6 9l6 6 6-6"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+
+  <span class="nav-toggle-text">隐藏导航</span>
+</button>
+
+<script>
+  (() => {
+    "use strict";
+
+    const STORAGE_KEY = "huangjy-blog-nav-hidden";
+
+    function initializeNavigationToggle() {
+      const button = document.getElementById("nav-visibility-toggle");
+      const menuBlur = document.getElementById("menu-blur");
+
+      if (!button || !menuBlur) {
+        return;
+      }
+
+      /*
+       * fixed-fill-blur 的结构：
+       * 固定导航外层
+       *   ├── #menu-blur
+       *   └── 导航内容
+       */
+      const navigation = menuBlur.parentElement;
+      const navigationSpacer = navigation.previousElementSibling;
+      const text = button.querySelector(".nav-toggle-text");
+
+      if (!navigation) {
+        return;
+      }
+
+      navigation.id = "site-fixed-navigation";
+      navigation.classList.add("site-fixed-navigation");
+
+      button.setAttribute("aria-controls", navigation.id);
+
+      /*
+       * fixed-fill-blur 前面有一个占位区域。
+       * 隐藏导航时同时收起占位，避免页面顶部留下大块空白。
+       */
+      if (navigationSpacer) {
+        navigationSpacer.classList.add("site-navigation-spacer");
+      }
+
+      function navigationIsHidden() {
+        return navigation.classList.contains("site-navigation-hidden");
+      }
+
+      function setNavigationHidden(hidden, saveState = true) {
+        navigation.classList.toggle("site-navigation-hidden", hidden);
+
+        if (navigationSpacer) {
+          navigationSpacer.classList.toggle(
+            "site-navigation-spacer-hidden",
+            hidden
+          );
+        }
+
+        document.documentElement.classList.toggle(
+          "site-navigation-is-hidden",
+          hidden
+        );
+
+        button.classList.toggle("navigation-hidden-state", hidden);
+
+        button.setAttribute("aria-expanded", String(!hidden));
+        button.setAttribute(
+          "aria-label",
+          hidden ? "显示导航栏" : "隐藏导航栏"
+        );
+
+        button.title = hidden
+          ? "显示导航栏（Alt + M）"
+          : "隐藏导航栏（Alt + M）";
+
+        if (text) {
+          text.textContent = hidden ? "显示导航" : "隐藏导航";
+        }
+
+        if (saveState) {
+          sessionStorage.setItem(STORAGE_KEY, hidden ? "1" : "0");
+        }
+
+        updateFloatingButton();
+      }
+
+      /*
+       * 页面向下阅读后显示悬浮按钮。
+       * 导航被隐藏时，无论滚动位置如何都保留按钮。
+       */
+      function updateFloatingButton() {
+        const shouldShow =
+          window.scrollY > 180 || navigationIsHidden();
+
+        button.classList.toggle("nav-toggle-visible", shouldShow);
+      }
+
+      button.addEventListener("click", () => {
+        setNavigationHidden(!navigationIsHidden());
+      });
+
+      /*
+       * 快捷键 Alt + M：
+       * 避免鼠标操作，也能随时开关导航。
+       */
+      document.addEventListener("keydown", (event) => {
+        if (
+          event.altKey &&
+          event.key.toLowerCase() === "m" &&
+          !event.ctrlKey &&
+          !event.metaKey
+        ) {
+          event.preventDefault();
+          setNavigationHidden(!navigationIsHidden());
+        }
+      });
+
+      window.addEventListener("scroll", updateFloatingButton, {
+        passive: true
+      });
+
+      /*
+       * 当前浏览器标签页内记住状态。
+       * 关闭浏览器标签页后恢复默认显示。
+       */
+      const savedHiddenState =
+        sessionStorage.getItem(STORAGE_KEY) === "1";
+
+      setNavigationHidden(savedHiddenState, false);
+      updateFloatingButton();
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener(
+        "DOMContentLoaded",
+        initializeNavigationToggle
+      );
+    } else {
+      initializeNavigationToggle();
+    }
+  })();
+</script>
+
+<!-- 悬浮文章目录 -->
+<button
+  id="floating-toc-button"
+  type="button"
+  aria-label="打开文章目录"
+  aria-expanded="false"
+  aria-controls="floating-toc-panel"
+>
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path
+      d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+    />
+  </svg>
+  <span>目录</span>
+</button>
+
+<div id="floating-toc-overlay" aria-hidden="true"></div>
+
+<aside
+  id="floating-toc-panel"
+  aria-label="文章目录"
+  aria-hidden="true"
+>
+  <div class="floating-toc-header">
+    <strong>文章目录</strong>
+
+    <button
+      id="floating-toc-close"
+      type="button"
+      aria-label="关闭文章目录"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          d="M6 6l12 12M18 6L6 18"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+        />
+      </svg>
+    </button>
+  </div>
+
+  <div id="floating-toc-content"></div>
+</aside>
+
+<script>
+  (() => {
+    "use strict";
+
+    function initFloatingToc() {
+      const originalToc = document.getElementById("TableOfContents");
+      const button = document.getElementById("floating-toc-button");
+      const panel = document.getElementById("floating-toc-panel");
+      const overlay = document.getElementById("floating-toc-overlay");
+      const closeButton = document.getElementById("floating-toc-close");
+      const content = document.getElementById("floating-toc-content");
+
+      /*
+       * 当前页面没有目录时，不显示悬浮按钮。
+       */
+      if (
+        !originalToc ||
+        !originalToc.querySelector("a") ||
+        !button ||
+        !panel ||
+        !overlay ||
+        !closeButton ||
+        !content
+      ) {
+        if (button) {
+          button.remove();
+        }
+        if (panel) {
+          panel.remove();
+        }
+        if (overlay) {
+          overlay.remove();
+        }
+        return;
+      }
+
+      /*
+       * 复制主题已经生成的目录内容。
+       * 不复制原来的 id，避免页面中出现重复 ID。
+       */
+      const clonedToc = document.createElement("nav");
+      clonedToc.className = "floating-toc-navigation";
+      clonedToc.innerHTML = originalToc.innerHTML;
+      content.appendChild(clonedToc);
+
+      function isOpen() {
+        return panel.classList.contains("is-open");
+      }
+
+      function openToc() {
+        panel.classList.add("is-open");
+        overlay.classList.add("is-open");
+        document.documentElement.classList.add("floating-toc-open");
+
+        panel.setAttribute("aria-hidden", "false");
+        overlay.setAttribute("aria-hidden", "false");
+        button.setAttribute("aria-expanded", "true");
+        button.setAttribute("aria-label", "关闭文章目录");
+
+        closeButton.focus();
+      }
+
+      function closeToc(returnFocus = false) {
+        panel.classList.remove("is-open");
+        overlay.classList.remove("is-open");
+        document.documentElement.classList.remove("floating-toc-open");
+
+        panel.setAttribute("aria-hidden", "true");
+        overlay.setAttribute("aria-hidden", "true");
+        button.setAttribute("aria-expanded", "false");
+        button.setAttribute("aria-label", "打开文章目录");
+
+        if (returnFocus) {
+          button.focus();
+        }
+      }
+
+      button.addEventListener("click", () => {
+        if (isOpen()) {
+          closeToc();
+        } else {
+          openToc();
+        }
+      });
+
+      closeButton.addEventListener("click", () => {
+        closeToc(true);
+      });
+
+      overlay.addEventListener("click", () => {
+        closeToc();
+      });
+
+      /*
+       * 点击目录章节后自动关闭抽屉。
+       */
+      content.querySelectorAll('a[href^="#"]').forEach((link) => {
+        link.addEventListener("click", () => {
+          closeToc();
+        });
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && isOpen()) {
+          closeToc(true);
+        }
+
+        /*
+         * Alt + T 可随时打开或关闭目录。
+         */
+        if (
+          event.altKey &&
+          event.key.toLowerCase() === "t" &&
+          !event.ctrlKey &&
+          !event.metaKey
+        ) {
+          event.preventDefault();
+
+          if (isOpen()) {
+            closeToc();
+          } else {
+            openToc();
+          }
+        }
+      });
+
+      /*
+       * 开始向下阅读后才显示悬浮按钮。
+       * 页面顶部继续使用主题原来的目录开关。
+       */
+      function updateButtonVisibility() {
+        button.classList.toggle(
+          "is-visible",
+          window.scrollY > 180 || isOpen()
+        );
+      }
+
+      window.addEventListener("scroll", updateButtonVisibility, {
+        passive: true
+      });
+
+      updateButtonVisibility();
+
+      /*
+       * 跟踪当前阅读章节，在悬浮目录中标记。
+       */
+      const tocLinks = Array.from(
+        content.querySelectorAll('a[href^="#"]')
+      );
+
+      const headingMap = new Map();
+
+      tocLinks.forEach((link) => {
+        const id = decodeURIComponent(
+          link.getAttribute("href").slice(1)
+        );
+
+        const heading = document.getElementById(id);
+
+        if (heading) {
+          headingMap.set(heading, link);
+        }
+      });
+
+      if ("IntersectionObserver" in window && headingMap.size > 0) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            const visibleEntries = entries
+              .filter((entry) => entry.isIntersecting)
+              .sort(
+                (a, b) =>
+                  a.boundingClientRect.top -
+                  b.boundingClientRect.top
+              );
+
+            if (!visibleEntries.length) {
+              return;
+            }
+
+            tocLinks.forEach((link) => {
+              link.classList.remove("is-active");
+            });
+
+            const activeLink = headingMap.get(
+              visibleEntries[0].target
+            );
+
+            if (activeLink) {
+              activeLink.classList.add("is-active");
+              activeLink.scrollIntoView({
+                block: "nearest"
+              });
+            }
+          },
+          {
+            rootMargin: "-15% 0px -72% 0px",
+            threshold: [0, 1]
+          }
+        );
+
+        headingMap.forEach((_, heading) => {
+          observer.observe(heading);
+        });
+      }
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener(
+        "DOMContentLoaded",
+        initFloatingToc
+      );
+    } else {
+      initFloatingToc();
+    }
+  })();
+</script>
+<button
+  id="fixed-toc-toggle"
+  type="button"
+  aria-label="隐藏目录"
+  title="显示或隐藏目录"
+  hidden
+>
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path
+      d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+    />
+  </svg>
+
+  <span>隐藏目录</span>
+</button>
+
+<script>
+  (() => {
+    "use strict";
+
+    function initTocToggle() {
+      const toc = document.getElementById("TOCView");
+      const button = document.getElementById("fixed-toc-toggle");
+      const text = button?.querySelector("span");
+
+      if (!toc || !button || !text) {
+        button?.remove();
+        return;
+      }
+
+      /*
+       * Blowfish 文章布局结构：
+       *
+       * section
+       * ├── 目录列
+       * │   └── .toc
+       * │       └── #TOCView
+       * └── 正文列
+       */
+      const tocInner = toc.closest(".toc") || toc;
+      const tocColumn = tocInner.parentElement;
+      const articleSection = tocColumn?.parentElement;
+      const article = articleSection?.closest("article");
+
+      const contentColumn = articleSection
+        ? Array.from(articleSection.children).find(
+            (element) => element !== tocColumn
+          )
+        : null;
+
+      if (
+        !tocColumn ||
+        !articleSection ||
+        !contentColumn ||
+        !article
+      ) {
+        console.warn("未找到 Blowfish 目录布局节点");
+        return;
+      }
+
+      button.hidden = false;
+
+      function isHidden() {
+        return tocColumn.classList.contains(
+          "toc-column-user-hidden"
+        );
+      }
+
+      function setHidden(hidden, saveState = true) {
+        /*
+         * 只隐藏目录所在的整列。
+         * 不隐藏按钮，也不修改按钮所在的 reader-tools。
+         */
+        tocColumn.classList.toggle(
+          "toc-column-user-hidden",
+          hidden
+        );
+
+        /*
+         * 给真实的 Flex 容器和正文列添加状态类。
+         */
+        articleSection.classList.toggle(
+          "toc-section-user-hidden",
+          hidden
+        );
+
+        contentColumn.classList.toggle(
+          "toc-content-user-centered",
+          hidden
+        );
+
+        article.classList.toggle(
+          "toc-article-user-hidden",
+          hidden
+        );
+
+        button.classList.toggle("toc-is-hidden", hidden);
+
+        text.textContent = hidden
+          ? "显示目录"
+          : "隐藏目录";
+
+        button.setAttribute(
+          "aria-label",
+          hidden ? "显示目录" : "隐藏目录"
+        );
+
+        button.setAttribute(
+          "title",
+          hidden ? "显示文章目录" : "隐藏文章目录"
+        );
+
+        button.setAttribute(
+          "aria-expanded",
+          String(!hidden)
+        );
+
+        if (saveState) {
+          sessionStorage.setItem(
+            "toc-user-hidden",
+            hidden ? "1" : "0"
+          );
+        }
+      }
+
+      button.addEventListener("click", () => {
+        setHidden(!isHidden());
+      });
+
+      const savedHidden =
+        sessionStorage.getItem("toc-user-hidden") === "1";
+
+      setHidden(savedHidden, false);
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener(
+        "DOMContentLoaded",
+        initTocToggle
+      );
+    } else {
+      initTocToggle();
+    }
+  })();
+</script>
+<script>
+  (() => {
+    function groupReaderButtons() {
+      const navButton =
+        document.getElementById("nav-visibility-toggle");
+
+      const tocButton =
+        document.getElementById("fixed-toc-toggle");
+
+      if (!navButton && !tocButton) {
+        return;
+      }
+
+      let container =
+        document.getElementById("reader-tools");
+
+      if (!container) {
+        container = document.createElement("div");
+        container.id = "reader-tools";
+        container.setAttribute(
+          "aria-label",
+          "阅读辅助工具"
+        );
+
+        document.body.appendChild(container);
+      }
+
+      /*
+       * 顺序固定：
+       * 上方：目录
+       * 下方：导航
+       */
+      if (tocButton) {
+        container.appendChild(tocButton);
+      }
+
+      if (navButton) {
+        container.appendChild(navButton);
+      }
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener(
+        "DOMContentLoaded",
+        groupReaderButtons
+      );
+    } else {
+      groupReaderButtons();
+    }
+  })();
+</script>

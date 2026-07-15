@@ -1,0 +1,1891 @@
+/* =========================================
+   全局背景：浅灰米白 + 顶部柔光
+   ========================================= */
+
+html:not(.dark) {
+  min-height: 100%;
+  background:
+    radial-gradient(
+      ellipse 80% 35% at 50% -5%,
+      rgba(99, 102, 241, 0.18),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 45% 25% at 85% 5%,
+      rgba(14, 165, 233, 0.10),
+      transparent 75%
+    ),
+    #f7f8fa !important;
+}
+
+html:not(.dark) body,
+html:not(.dark) #the-top {
+  background: transparent !important;
+}
+
+/* 深色模式 */
+html.dark {
+  min-height: 100%;
+  background:
+    radial-gradient(
+      ellipse 80% 35% at 50% -5%,
+      rgba(99, 102, 241, 0.22),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 45% 25% at 85% 5%,
+      rgba(14, 165, 233, 0.13),
+      transparent 75%
+    ),
+    #0f1117 !important;
+}
+
+html.dark body,
+html.dark #the-top {
+  background: transparent !important;
+}
+
+/* =========================================
+   顶部导航栏
+   ========================================= */
+
+/* 只处理顶部导航背景，不影响首页和文章标题 */
+#menu-blur {
+  background: rgba(255, 255, 255, 0.76) !important;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+html.dark #menu-blur {
+  background: rgba(15, 17, 23, 0.78) !important;
+  border-bottom-color: rgba(255, 255, 255, 0.07);
+}
+
+/* 所有正文内部标题容器保持透明 */
+main header {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+
+html.dark header:not(#single_header) {
+  background: rgba(15, 17, 23, 0.72) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+/* =========================================
+   文章列表卡片
+   ========================================= */
+
+article {
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease;
+}
+
+/* 文章列表中的卡片 */
+article.border {
+  background: rgba(255, 255, 255, 0.78) !important;
+  border: 1px solid rgba(148, 163, 184, 0.18) !important;
+  border-radius: 18px !important;
+  box-shadow:
+    0 8px 30px rgba(15, 23, 42, 0.04),
+    0 1px 3px rgba(15, 23, 42, 0.04);
+  overflow: hidden;
+}
+
+article.border:hover {
+  transform: translateY(-3px);
+  border-color: rgba(99, 102, 241, 0.28) !important;
+  box-shadow:
+    0 18px 45px rgba(15, 23, 42, 0.08),
+    0 2px 8px rgba(99, 102, 241, 0.06);
+}
+
+html.dark article.border {
+  background: rgba(24, 27, 36, 0.82) !important;
+  border-color: rgba(148, 163, 184, 0.12) !important;
+  box-shadow:
+    0 12px 35px rgba(0, 0, 0, 0.18);
+}
+
+html.dark article.border:hover {
+  border-color: rgba(129, 140, 248, 0.32) !important;
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.28);
+}
+
+/* =========================================
+   标题和链接
+   ========================================= */
+
+a {
+  transition:
+    color 0.18s ease,
+    opacity 0.18s ease;
+}
+
+article h2 a:hover,
+article h3 a:hover {
+  color: rgb(79, 70, 229) !important;
+}
+
+html.dark article h2 a:hover,
+html.dark article h3 a:hover {
+  color: rgb(165, 180, 252) !important;
+}
+
+/* =========================================
+   正文区域
+   ========================================= */
+
+.prose {
+  line-height: 1.85;
+}
+
+.prose img {
+  border-radius: 14px;
+  box-shadow: 0 12px 35px rgba(15, 23, 42, 0.10);
+}
+
+.prose pre {
+  border-radius: 14px !important;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+/* 引用块 */
+.prose blockquote {
+  border-left-width: 4px;
+  border-left-color: rgb(99, 102, 241);
+  background: rgba(99, 102, 241, 0.05);
+  border-radius: 0 12px 12px 0;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+}
+
+html.dark .prose blockquote {
+  background: rgba(129, 140, 248, 0.08);
+}
+
+/* =========================================
+   首页个人介绍区域
+   ========================================= */
+
+.profile {
+  position: relative;
+}
+
+.profile::before {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(
+    circle,
+    rgba(99, 102, 241, 0.13),
+    transparent 68%
+  );
+  filter: blur(12px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* =========================================
+   标签和分类
+   ========================================= */
+
+a[href*="/tags/"],
+a[href*="/categories/"] {
+  border-radius: 999px;
+}
+
+/* =========================================
+   页面滚动条
+   ========================================= */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.28);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(79, 70, 229, 0.45);
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+/* 文章标题区域不要继承顶部导航栏样式 */
+header#single_header {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+/* ==================================================
+   阅读模式：导航栏悬浮开关
+   ================================================== */
+
+/* 导航栏显示、隐藏动画 */
+.site-fixed-navigation {
+  transition:
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.2s ease !important;
+  will-change: transform, opacity;
+}
+
+/* 向上收起导航栏 */
+.site-fixed-navigation.site-navigation-hidden {
+  transform: translateY(calc(-100% - 12px)) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* 导航栏原本的顶部占位区域 */
+.site-navigation-spacer {
+  transition:
+    min-height 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    height 0.25s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+/* 隐藏导航时收起占位区域 */
+.site-navigation-spacer.site-navigation-spacer-hidden {
+  min-height: 0 !important;
+  height: 0 !important;
+}
+
+/* 右下角悬浮开关 */
+#nav-visibility-toggle {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 5.5rem;
+  z-index: 130;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+
+  min-width: 46px;
+  height: 46px;
+  padding: 0 0.85rem;
+
+  color: rgb(51, 65, 85);
+  background: rgba(255, 255, 255, 0.86);
+
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: 999px;
+
+  box-shadow:
+    0 10px 30px rgba(15, 23, 42, 0.12),
+    0 2px 8px rgba(15, 23, 42, 0.06);
+
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  cursor: pointer;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px) scale(0.96);
+
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease,
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* 向下阅读后显示按钮 */
+#nav-visibility-toggle.nav-toggle-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+#nav-visibility-toggle:hover {
+  color: rgb(79, 70, 229);
+  background: rgba(255, 255, 255, 0.96);
+  border-color: rgba(99, 102, 241, 0.34);
+
+  box-shadow:
+    0 14px 36px rgba(15, 23, 42, 0.16),
+    0 3px 10px rgba(99, 102, 241, 0.10);
+
+  transform: translateY(-2px) scale(1.02);
+}
+
+#nav-visibility-toggle:active {
+  transform: translateY(0) scale(0.97);
+}
+
+#nav-visibility-toggle:focus-visible {
+  outline: 3px solid rgba(99, 102, 241, 0.28);
+  outline-offset: 3px;
+}
+
+/* 按钮图标 */
+.nav-toggle-icon {
+  width: 19px;
+  height: 19px;
+  flex: none;
+}
+
+/* 默认显示向上箭头，表示收起导航 */
+.nav-toggle-show-icon {
+  display: none;
+}
+
+/* 导航隐藏后显示向下箭头 */
+#nav-visibility-toggle.navigation-hidden-state
+  .nav-toggle-hide-icon {
+  display: none;
+}
+
+#nav-visibility-toggle.navigation-hidden-state
+  .nav-toggle-show-icon {
+  display: block;
+}
+
+.nav-toggle-text {
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* 深色模式 */
+html.dark #nav-visibility-toggle {
+  color: rgb(203, 213, 225);
+  background: rgba(24, 27, 36, 0.88);
+  border-color: rgba(148, 163, 184, 0.16);
+
+  box-shadow:
+    0 12px 34px rgba(0, 0, 0, 0.34),
+    0 2px 8px rgba(0, 0, 0, 0.20);
+}
+
+html.dark #nav-visibility-toggle:hover {
+  color: rgb(165, 180, 252);
+  background: rgba(31, 35, 46, 0.96);
+  border-color: rgba(129, 140, 248, 0.34);
+}
+
+/* 手机端只显示图标，防止遮挡正文 */
+@media (max-width: 640px) {
+  #nav-visibility-toggle {
+    right: 0.9rem;
+    bottom: 4.8rem;
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+    padding: 0;
+  }
+
+  .nav-toggle-text {
+    display: none;
+  }
+}
+
+/* 用户关闭动画时尊重系统设置 */
+@media (prefers-reduced-motion: reduce) {
+  .site-fixed-navigation,
+  .site-navigation-spacer,
+  #nav-visibility-toggle {
+    transition: none !important;
+  }
+}
+
+/* ==================================================
+   阅读过程中可随时打开的悬浮目录
+   ================================================== */
+
+#floating-toc-button {
+  position: fixed;
+  right: 1.2rem;
+  bottom: 5.4rem;
+  z-index: 120;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+
+  height: 46px;
+  min-width: 46px;
+  padding: 0 0.9rem;
+
+  color: rgb(51, 65, 85);
+  background: rgba(255, 255, 255, 0.9);
+
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 999px;
+
+  box-shadow:
+    0 12px 32px rgba(15, 23, 42, 0.13),
+    0 2px 7px rgba(15, 23, 42, 0.06);
+
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  cursor: pointer;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px) scale(0.96);
+
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease,
+    transform 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+#floating-toc-button.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+#floating-toc-button:hover {
+  color: rgb(79, 70, 229);
+  background: rgba(255, 255, 255, 0.98);
+  border-color: rgba(99, 102, 241, 0.38);
+  transform: translateY(-2px);
+}
+
+#floating-toc-button svg {
+  width: 19px;
+  height: 19px;
+}
+
+#floating-toc-button span {
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+
+/* 遮罩 */
+#floating-toc-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 128;
+
+  background: rgba(15, 23, 42, 0.3);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.22s ease,
+    visibility 0.22s ease;
+}
+
+#floating-toc-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* 右侧目录抽屉 */
+#floating-toc-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 129;
+
+  width: min(380px, 88vw);
+  padding: 1.2rem;
+
+  color: rgb(51, 65, 85);
+  background: rgba(250, 251, 253, 0.97);
+
+  border-left: 1px solid rgba(148, 163, 184, 0.22);
+
+  box-shadow:
+    -18px 0 45px rgba(15, 23, 42, 0.15);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  visibility: hidden;
+  transform: translateX(105%);
+
+  transition:
+    transform 0.26s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0.26s ease;
+}
+
+#floating-toc-panel.is-open {
+  visibility: visible;
+  transform: translateX(0);
+}
+
+.floating-toc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  min-height: 44px;
+  padding-bottom: 0.9rem;
+  margin-bottom: 0.8rem;
+
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.floating-toc-header strong {
+  font-size: 1.02rem;
+  font-weight: 650;
+}
+
+#floating-toc-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 38px;
+  height: 38px;
+
+  border-radius: 10px;
+  cursor: pointer;
+
+  transition:
+    color 0.18s ease,
+    background-color 0.18s ease;
+}
+
+#floating-toc-close:hover {
+  color: rgb(79, 70, 229);
+  background: rgba(99, 102, 241, 0.09);
+}
+
+#floating-toc-close svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* 目录内容独立滚动 */
+#floating-toc-content {
+  height: calc(100vh - 92px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 0.35rem;
+}
+
+.floating-toc-navigation ul {
+  margin: 0;
+  padding-left: 1rem;
+  list-style: none;
+}
+
+.floating-toc-navigation > ul {
+  padding-left: 0;
+}
+
+.floating-toc-navigation li {
+  margin: 0.25rem 0;
+}
+
+.floating-toc-navigation a {
+  display: block;
+  padding: 0.45rem 0.65rem;
+
+  color: rgb(71, 85, 105);
+  font-size: 0.88rem;
+  line-height: 1.45;
+  text-decoration: none;
+
+  border-left: 2px solid transparent;
+  border-radius: 0 8px 8px 0;
+
+  transition:
+    color 0.16s ease,
+    background-color 0.16s ease,
+    border-color 0.16s ease;
+}
+
+.floating-toc-navigation a:hover {
+  color: rgb(79, 70, 229);
+  background: rgba(99, 102, 241, 0.07);
+}
+
+.floating-toc-navigation a.is-active {
+  color: rgb(79, 70, 229);
+  font-weight: 600;
+  background: rgba(99, 102, 241, 0.09);
+  border-left-color: rgb(99, 102, 241);
+}
+
+/* 打开抽屉后避免正文继续滚动 */
+html.floating-toc-open {
+  overflow: hidden;
+}
+
+/* 深色模式 */
+html.dark #floating-toc-button {
+  color: rgb(203, 213, 225);
+  background: rgba(24, 27, 36, 0.92);
+  border-color: rgba(148, 163, 184, 0.17);
+}
+
+html.dark #floating-toc-button:hover {
+  color: rgb(165, 180, 252);
+  background: rgba(31, 35, 46, 0.98);
+  border-color: rgba(129, 140, 248, 0.36);
+}
+
+html.dark #floating-toc-panel {
+  color: rgb(203, 213, 225);
+  background: rgba(17, 20, 28, 0.97);
+  border-left-color: rgba(148, 163, 184, 0.13);
+}
+
+html.dark .floating-toc-header {
+  border-bottom-color: rgba(148, 163, 184, 0.13);
+}
+
+html.dark .floating-toc-navigation a {
+  color: rgb(148, 163, 184);
+}
+
+html.dark .floating-toc-navigation a:hover,
+html.dark .floating-toc-navigation a.is-active {
+  color: rgb(165, 180, 252);
+  background: rgba(129, 140, 248, 0.1);
+}
+
+/* 手机端 */
+@media (max-width: 640px) {
+  #floating-toc-button {
+    right: 0.85rem;
+    bottom: 4.8rem;
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+    padding: 0;
+  }
+
+  #floating-toc-button span {
+    display: none;
+  }
+
+  #floating-toc-panel {
+    width: min(340px, 92vw);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #floating-toc-button,
+  #floating-toc-overlay,
+  #floating-toc-panel {
+    transition: none !important;
+  }
+}
+
+/* 阅读过程中随时开关右侧目录 */
+
+#TOCView.toc-user-hidden {
+  display: none !important;
+}
+
+#fixed-toc-toggle {
+  position: fixed;
+  right: 1.1rem;
+  bottom: 5.2rem;
+  z-index: 120;
+
+  display: none;
+  align-items: center;
+  gap: 0.4rem;
+
+  height: 42px;
+  padding: 0 0.8rem;
+
+  color: rgb(51, 65, 85);
+  background: rgba(255, 255, 255, 0.9);
+
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 999px;
+
+  box-shadow:
+    0 10px 28px rgba(15, 23, 42, 0.12),
+    0 2px 6px rgba(15, 23, 42, 0.06);
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+/* 只在桌面端显示，桌面端才有右侧目录 */
+@media (min-width: 1024px) {
+  #fixed-toc-toggle:not([hidden]) {
+    display: flex;
+  }
+}
+
+#fixed-toc-toggle:hover {
+  color: rgb(79, 70, 229);
+  background: rgba(255, 255, 255, 0.98);
+  border-color: rgba(99, 102, 241, 0.38);
+  transform: translateY(-2px);
+}
+
+#fixed-toc-toggle svg {
+  width: 18px;
+  height: 18px;
+}
+
+#fixed-toc-toggle span {
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+#fixed-toc-toggle.toc-is-hidden {
+  color: rgb(79, 70, 229);
+  border-color: rgba(99, 102, 241, 0.36);
+}
+
+/* 深色模式 */
+
+html.dark #fixed-toc-toggle {
+  color: rgb(203, 213, 225);
+  background: rgba(24, 27, 36, 0.92);
+  border-color: rgba(148, 163, 184, 0.17);
+}
+
+html.dark #fixed-toc-toggle:hover,
+html.dark #fixed-toc-toggle.toc-is-hidden {
+  color: rgb(165, 180, 252);
+  background: rgba(31, 35, 46, 0.98);
+  border-color: rgba(129, 140, 248, 0.38);
+}
+
+
+/* 阅读过程中随时开关右侧目录 */
+
+#TOCView.toc-user-hidden {
+  display: none !important;
+}
+
+#fixed-toc-toggle {
+  position: fixed;
+  right: 1.1rem;
+  bottom: 5.2rem;
+  z-index: 120;
+
+  display: none;
+  align-items: center;
+  gap: 0.4rem;
+
+  height: 42px;
+  padding: 0 0.8rem;
+
+  color: rgb(51, 65, 85);
+  background: rgba(255, 255, 255, 0.9);
+
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 999px;
+
+  box-shadow:
+    0 10px 28px rgba(15, 23, 42, 0.12),
+    0 2px 6px rgba(15, 23, 42, 0.06);
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+/* 只在桌面端显示，桌面端才有右侧目录 */
+@media (min-width: 1024px) {
+  #fixed-toc-toggle:not([hidden]) {
+    display: flex;
+  }
+}
+
+#fixed-toc-toggle:hover {
+  color: rgb(79, 70, 229);
+  background: rgba(255, 255, 255, 0.98);
+  border-color: rgba(99, 102, 241, 0.38);
+  transform: translateY(-2px);
+}
+
+#fixed-toc-toggle svg {
+  width: 18px;
+  height: 18px;
+}
+
+#fixed-toc-toggle span {
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+#fixed-toc-toggle.toc-is-hidden {
+  color: rgb(79, 70, 229);
+  border-color: rgba(99, 102, 241, 0.36);
+}
+
+/* 深色模式 */
+
+html.dark #fixed-toc-toggle {
+  color: rgb(203, 213, 225);
+  background: rgba(24, 27, 36, 0.92);
+  border-color: rgba(148, 163, 184, 0.17);
+}
+
+html.dark #fixed-toc-toggle:hover,
+html.dark #fixed-toc-toggle.toc-is-hidden {
+  color: rgb(165, 180, 252);
+  background: rgba(31, 35, 46, 0.98);
+  border-color: rgba(129, 140, 248, 0.38);
+}
+
+/* ==================================================
+   阅读工具按钮统一容器
+   上：目录开关
+   下：导航开关
+   ================================================== */
+
+#reader-tools {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 5.5rem;
+  z-index: 160;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+
+  width: 120px;
+
+  pointer-events: none;
+}
+
+/* 清除两个按钮原来的独立固定定位 */
+#reader-tools > #fixed-toc-toggle,
+#reader-tools > #nav-visibility-toggle {
+  position: static !important;
+
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+
+  width: 120px !important;
+  min-width: 120px !important;
+  height: 46px !important;
+
+  margin: 0 !important;
+  padding: 0 0.85rem !important;
+
+  box-sizing: border-box;
+  justify-content: center;
+
+  pointer-events: auto;
+}
+
+/* 保证图标尺寸一致 */
+#reader-tools > button svg {
+  width: 19px !important;
+  height: 19px !important;
+  flex: 0 0 19px;
+}
+
+/* 保证文字位置一致 */
+#reader-tools > button span {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/*
+ * 目录按钮没有 hidden 属性时显示。
+ * 防止之前的 display:none 把它继续隐藏。
+ */
+@media (min-width: 1024px) {
+  #reader-tools > #fixed-toc-toggle:not([hidden]) {
+    display: flex !important;
+  }
+}
+
+/* 导航按钮继续沿用原来的显示条件 */
+#reader-tools > #nav-visibility-toggle.nav-toggle-visible {
+  display: flex !important;
+}
+
+/* 手机上改成纯图标按钮 */
+@media (max-width: 640px) {
+  #reader-tools {
+    right: 0.9rem;
+    bottom: 4.8rem;
+    width: 44px;
+    gap: 10px;
+  }
+
+  #reader-tools > #fixed-toc-toggle,
+  #reader-tools > #nav-visibility-toggle {
+    width: 44px !important;
+    min-width: 44px !important;
+    height: 44px !important;
+    padding: 0 !important;
+  }
+
+  #reader-tools > button span {
+    display: none !important;
+  }
+}
+
+/* ==========================================================
+   代码主题：Aurora Slate
+   适配当前蓝紫柔光、浅灰背景和深色模式
+   ========================================================== */
+
+:root {
+  --code-bg: #f7f9fd;
+  --code-topbar: #eef2f8;
+  --code-border: rgba(99, 102, 241, 0.18);
+  --code-shadow: rgba(30, 41, 59, 0.08);
+
+  --code-text: #273449;
+  --code-muted: #8995a8;
+
+  --code-keyword: #7c3aed;
+  --code-type: #2563eb;
+  --code-function: #0891b2;
+  --code-string: #15803d;
+  --code-number: #c2410c;
+  --code-preprocessor: #b45309;
+  --code-comment: #7b8798;
+  --code-operator: #be185d;
+  --code-constant: #0369a1;
+
+  --code-line-highlight: rgba(99, 102, 241, 0.10);
+  --code-inline-bg: rgba(99, 102, 241, 0.09);
+  --code-inline-border: rgba(99, 102, 241, 0.15);
+}
+
+/* 深色模式 */
+html.dark {
+  --code-bg: #111827;
+  --code-topbar: #172033;
+  --code-border: rgba(129, 140, 248, 0.22);
+  --code-shadow: rgba(0, 0, 0, 0.32);
+
+  --code-text: #d8e1ef;
+  --code-muted: #77849a;
+
+  --code-keyword: #c4b5fd;
+  --code-type: #7dd3fc;
+  --code-function: #67e8f9;
+  --code-string: #86efac;
+  --code-number: #fdba74;
+  --code-preprocessor: #fbbf24;
+  --code-comment: #8491a5;
+  --code-operator: #f9a8d4;
+  --code-constant: #93c5fd;
+
+  --code-line-highlight: rgba(129, 140, 248, 0.13);
+  --code-inline-bg: rgba(129, 140, 248, 0.12);
+  --code-inline-border: rgba(129, 140, 248, 0.19);
+}
+
+/* ==========================================================
+   代码块整体
+   ========================================================== */
+
+.prose .highlight {
+  position: relative;
+  max-width: 100%;
+  margin: 1.6rem 0 !important;
+  padding-top: 2.45rem;
+
+  color: var(--code-text);
+  background: var(--code-bg) !important;
+
+  border: 1px solid var(--code-border);
+  border-radius: 15px;
+  overflow: hidden;
+
+  box-shadow:
+    0 12px 32px var(--code-shadow),
+    0 1px 2px rgba(15, 23, 42, 0.04);
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* 鼠标经过时只有非常轻微的强调 */
+.prose .highlight:hover {
+  border-color: rgba(99, 102, 241, 0.32);
+  box-shadow:
+    0 16px 38px var(--code-shadow),
+    0 2px 6px rgba(99, 102, 241, 0.06);
+}
+
+html.dark .prose .highlight:hover {
+  border-color: rgba(129, 140, 248, 0.35);
+}
+
+/* 顶部工具栏和三个圆点 */
+.prose .highlight::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2.45rem;
+
+  background:
+    radial-gradient(
+      circle,
+      #fb7185 0 4px,
+      transparent 4.5px
+    ) 1rem center / 9px 9px no-repeat,
+
+    radial-gradient(
+      circle,
+      #fbbf24 0 4px,
+      transparent 4.5px
+    ) 1.75rem center / 9px 9px no-repeat,
+
+    radial-gradient(
+      circle,
+      #34d399 0 4px,
+      transparent 4.5px
+    ) 2.5rem center / 9px 9px no-repeat,
+
+    var(--code-topbar);
+
+  border-bottom: 1px solid var(--code-border);
+  pointer-events: none;
+}
+
+/* 默认代码语言标识 */
+.prose .highlight::after {
+  content: "CODE";
+  position: absolute;
+  top: 0;
+  left: 3.8rem;
+  z-index: 2;
+
+  display: flex;
+  align-items: center;
+  height: 2.45rem;
+
+  color: var(--code-muted);
+  font-family:
+    "Cascadia Code",
+    "JetBrains Mono",
+    Consolas,
+    monospace;
+  font-size: 0.69rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+
+  pointer-events: none;
+}
+
+/* 根据语言显示名称 */
+.prose .highlight:has(code.language-c)::after {
+  content: "C";
+}
+
+.prose .highlight:has(code.language-cpp)::after,
+.prose .highlight:has(code.language-c\+\+)::after {
+  content: "C++";
+}
+
+.prose .highlight:has(code.language-bash)::after,
+.prose .highlight:has(code.language-shell)::after {
+  content: "SHELL";
+}
+
+.prose .highlight:has(code.language-dts)::after {
+  content: "DTS";
+}
+
+.prose .highlight:has(code.language-makefile)::after {
+  content: "MAKEFILE";
+}
+
+.prose .highlight:has(code.language-text)::after {
+  content: "LOG";
+}
+
+/* ==========================================================
+   代码文本区域
+   ========================================================== */
+
+.prose .highlight pre,
+.prose pre.chroma {
+  max-width: 100%;
+  margin: 0 !important;
+  padding: 1.2rem 1.35rem 1.3rem !important;
+
+  color: var(--code-text) !important;
+  background: transparent !important;
+
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+
+  overflow-x: auto !important;
+  overflow-y: hidden;
+
+  white-space: pre;
+  tab-size: 4;
+}
+
+.prose .highlight .chroma,
+.prose .highlight .chroma code {
+  color: var(--code-text);
+  background: transparent !important;
+
+  font-family:
+    "Cascadia Code",
+    "JetBrains Mono",
+    "SFMono-Regular",
+    Consolas,
+    "Liberation Mono",
+    monospace;
+
+  font-size: 0.89rem;
+  font-weight: 450;
+  line-height: 1.72;
+
+  font-variant-ligatures: none;
+  text-rendering: optimizeLegibility;
+}
+
+/* 防止长代码撑宽文章区域 */
+.article-content,
+.prose {
+  min-width: 0;
+}
+
+.prose .highlight code {
+  display: block;
+  min-width: max-content;
+}
+
+/* ==========================================================
+   C语言颜色
+   ========================================================== */
+
+/* 关键字：if、else、return、struct、static、const */
+.chroma .k,
+.chroma .kc,
+.chroma .kd,
+.chroma .kn,
+.chroma .kp,
+.chroma .kr {
+  color: var(--code-keyword) !important;
+  font-weight: 600;
+}
+
+/* 类型：int、char、void、unsigned、size_t */
+.chroma .kt {
+  color: var(--code-type) !important;
+  font-weight: 600;
+}
+
+/* 函数名 */
+.chroma .nf,
+.chroma .fm {
+  color: var(--code-function) !important;
+  font-weight: 600;
+}
+
+/* 内置函数或内置名称 */
+.chroma .nb,
+.chroma .bp {
+  color: var(--code-function) !important;
+}
+
+/* 宏、常量 */
+.chroma .no,
+.chroma .vc,
+.chroma .vg,
+.chroma .vi {
+  color: var(--code-constant) !important;
+}
+
+/* 预处理器：#include、#define、#ifdef */
+.chroma .cp,
+.chroma .cpf {
+  color: var(--code-preprocessor) !important;
+  font-weight: 550;
+}
+
+/* 字符串和字符 */
+.chroma .s,
+.chroma .s1,
+.chroma .s2,
+.chroma .sa,
+.chroma .sb,
+.chroma .sc,
+.chroma .sd,
+.chroma .se,
+.chroma .sh,
+.chroma .si,
+.chroma .sr,
+.chroma .ss,
+.chroma .sx {
+  color: var(--code-string) !important;
+}
+
+/* 数字 */
+.chroma .m,
+.chroma .mb,
+.chroma .mf,
+.chroma .mh,
+.chroma .mi,
+.chroma .mo,
+.chroma .il {
+  color: var(--code-number) !important;
+}
+
+/* 注释 */
+.chroma .c,
+.chroma .c1,
+.chroma .cm,
+.chroma .cs,
+.chroma .ch {
+  color: var(--code-comment) !important;
+  font-style: italic;
+}
+
+/* 运算符 */
+.chroma .o,
+.chroma .ow {
+  color: var(--code-operator) !important;
+}
+
+/* 普通标点 */
+.chroma .p {
+  color: var(--code-muted) !important;
+}
+
+/* 错误标记不要显示刺眼红底 */
+.chroma .err {
+  color: #dc2626 !important;
+  background: transparent !important;
+}
+
+/* ==========================================================
+   行号与重点行
+   ========================================================== */
+
+.prose .highlight .lntable {
+  width: 100%;
+  margin: 0 !important;
+
+  border: none !important;
+  border-spacing: 0;
+  border-collapse: collapse;
+
+  background: transparent !important;
+}
+
+.prose .highlight .lntd {
+  padding: 0 !important;
+  border: none !important;
+  vertical-align: top;
+}
+
+.prose .highlight .lntd:first-child {
+  width: 1%;
+  min-width: 3.2rem;
+
+  background: rgba(100, 116, 139, 0.045);
+  border-right: 1px solid var(--code-border) !important;
+
+  user-select: none;
+}
+
+.prose .highlight .lntd:first-child pre {
+  padding-right: 0.8rem !important;
+  padding-left: 0.65rem !important;
+  text-align: right;
+}
+
+.prose .highlight .lntd:last-child pre {
+  padding-left: 1.1rem !important;
+}
+
+.chroma .ln,
+.chroma .lnt {
+  color: var(--code-muted) !important;
+  opacity: 0.72;
+}
+
+/* 指定高亮行 */
+.chroma .hl {
+  display: block;
+
+  margin-right: -1.35rem;
+  margin-left: -1.35rem;
+  padding-right: 1.35rem;
+  padding-left: 1.35rem;
+
+  background: var(--code-line-highlight) !important;
+  border-left: 3px solid rgb(99, 102, 241);
+}
+
+html.dark .chroma .hl {
+  border-left-color: rgb(129, 140, 248);
+}
+
+/* ==========================================================
+   复制按钮
+   ========================================================== */
+
+.prose .highlight > button,
+.prose .highlight .copy-button {
+  top: 0.42rem !important;
+  right: 0.55rem !important;
+  z-index: 5;
+
+  height: 1.62rem;
+  padding: 0 0.65rem;
+
+  color: var(--code-muted) !important;
+  background: rgba(255, 255, 255, 0.64) !important;
+
+  border: 1px solid var(--code-border) !important;
+  border-radius: 8px !important;
+
+  font-size: 0.72rem !important;
+  font-weight: 600;
+
+  box-shadow: none !important;
+  backdrop-filter: blur(8px);
+
+  transition:
+    color 0.18s ease,
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.18s ease;
+}
+
+html.dark .prose .highlight > button,
+html.dark .prose .highlight .copy-button {
+  background: rgba(30, 41, 59, 0.72) !important;
+}
+
+.prose .highlight > button:hover,
+.prose .highlight .copy-button:hover {
+  color: rgb(79, 70, 229) !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  border-color: rgba(99, 102, 241, 0.42) !important;
+  transform: translateY(-1px);
+}
+
+html.dark .prose .highlight > button:hover,
+html.dark .prose .highlight .copy-button:hover {
+  color: rgb(199, 210, 254) !important;
+  background: rgba(51, 65, 85, 0.94) !important;
+}
+
+/* ==========================================================
+   行内代码，例如函数名、文件路径、命令
+   ========================================================== */
+
+.prose :not(pre) > code {
+  padding: 0.14em 0.42em;
+
+  color: rgb(79, 70, 229) !important;
+  background: var(--code-inline-bg) !important;
+
+  border: 1px solid var(--code-inline-border);
+  border-radius: 6px;
+
+  font-family:
+    "Cascadia Code",
+    "JetBrains Mono",
+    Consolas,
+    monospace;
+
+  font-size: 0.88em;
+  font-weight: 550;
+
+  white-space: break-spaces;
+}
+
+/* 去掉主题默认添加的反引号 */
+.prose :not(pre) > code::before,
+.prose :not(pre) > code::after {
+  content: none !important;
+}
+
+html.dark .prose :not(pre) > code {
+  color: rgb(199, 210, 254) !important;
+}
+
+/* ==========================================================
+   代码滚动条
+   ========================================================== */
+
+.prose .highlight pre::-webkit-scrollbar {
+  height: 9px;
+}
+
+.prose .highlight pre::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.prose .highlight pre::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.28);
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background-clip: content-box;
+}
+
+.prose .highlight pre::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 102, 241, 0.46);
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+/* 选中代码 */
+.prose .highlight ::selection {
+  color: inherit;
+  background: rgba(99, 102, 241, 0.22);
+}
+
+html.dark .prose .highlight ::selection {
+  background: rgba(129, 140, 248, 0.30);
+}
+
+/* 手机端 */
+@media (max-width: 640px) {
+  .prose .highlight {
+    margin-right: -0.25rem !important;
+    margin-left: -0.25rem !important;
+    border-radius: 12px;
+  }
+
+  .prose .highlight pre,
+  .prose pre.chroma {
+    padding: 1rem !important;
+  }
+
+  .prose .highlight .chroma,
+  .prose .highlight .chroma code {
+    font-size: 0.81rem;
+    line-height: 1.65;
+  }
+
+  .prose .highlight::after {
+    font-size: 0.65rem;
+  }
+}
+
+/* ==================================================
+   隐藏目录后居中正文
+   针对 Blowfish 的 Flex 文章布局
+   ================================================== */
+
+/* 只隐藏目录所在的整列 */
+.toc-column-user-hidden {
+  display: none !important;
+}
+
+/* 目录隐藏后，让文章正文列在 Flex 容器中居中 */
+section.toc-section-user-hidden {
+  justify-content: center !important;
+  align-items: stretch !important;
+}
+
+/* 正文外层释放目录占用的空间 */
+section.toc-section-user-hidden
+> .toc-content-user-centered {
+  width: 100% !important;
+  max-width: 56rem !important;
+
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+
+/* 标题、正文、页脚保持同一中心线 */
+article.toc-article-user-hidden #single_header,
+article.toc-article-user-hidden .article-content,
+article.toc-article-user-hidden > footer {
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+
+/* 正文宽度保持适合阅读，不要无限拉宽 */
+article.toc-article-user-hidden .article-content {
+  width: 100%;
+  max-width: 48rem !important;
+}
+
+/* 标题与正文宽度一致 */
+article.toc-article-user-hidden #single_header {
+  width: 100%;
+  max-width: 48rem !important;
+}
+
+/* 页脚和翻页区域对齐正文 */
+article.toc-article-user-hidden > footer {
+  width: 100%;
+  max-width: 48rem !important;
+}
+
+/* ==================================================
+   强制保证目录开关不会因为目录隐藏而消失
+   ================================================== */
+
+@media (min-width: 1024px) {
+  #reader-tools
+  > #fixed-toc-toggle:not([hidden]) {
+    display: flex !important;
+    visibility: visible !important;
+  }
+}
+
+/* 目录隐藏时按钮继续显示，并用高亮表示当前状态 */
+#reader-tools
+> #fixed-toc-toggle.toc-is-hidden {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+
+  color: rgb(79, 70, 229);
+  border-color: rgba(99, 102, 241, 0.38);
+}
+
+html.dark
+#reader-tools
+> #fixed-toc-toggle.toc-is-hidden {
+  color: rgb(165, 180, 252);
+  border-color: rgba(129, 140, 248, 0.4);
+}
+
+/* ==================================================
+   统一标题配色
+   ================================================== */
+
+:root {
+  --hj-title: #0f172a;
+  --hj-title-muted: #64748b;
+  --hj-primary: #4f46e5;
+  --hj-secondary: #0891b2;
+  --hj-title-line: rgba(99, 102, 241, 0.2);
+}
+
+html.dark {
+  --hj-title: #f1f5f9;
+  --hj-title-muted: #94a3b8;
+  --hj-primary: #a5b4fc;
+  --hj-secondary: #67e8f9;
+  --hj-title-line: rgba(129, 140, 248, 0.22);
+}
+
+/* ==================================================
+   首页个人区域
+   ================================================== */
+
+main article.text-center > header {
+  position: relative;
+  padding: 1rem 1rem 1.4rem !important;
+  margin-bottom: 1rem !important;
+}
+
+/* 头像柔光 */
+main article.text-center > header::before {
+  content: "";
+  position: absolute;
+  top: -1.5rem;
+  left: 50%;
+  width: 220px;
+  height: 220px;
+
+  background: radial-gradient(
+    circle,
+    rgba(99, 102, 241, 0.15),
+    transparent 68%
+  );
+
+  transform: translateX(-50%);
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+/* 圆形头像 */
+main article.text-center > header img.rounded-full {
+  position: relative;
+
+  width: 136px !important;
+  height: 136px !important;
+  margin-bottom: 1.05rem !important;
+
+  object-fit: cover;
+
+  border: 4px solid rgba(255, 255, 255, 0.92);
+  outline: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 50%;
+
+  box-shadow:
+    0 18px 45px rgba(15, 23, 42, 0.14),
+    0 4px 14px rgba(99, 102, 241, 0.13);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+html.dark main article.text-center > header img.rounded-full {
+  border-color: rgba(30, 41, 59, 0.92);
+  outline-color: rgba(129, 140, 248, 0.3);
+}
+
+main article.text-center > header img.rounded-full:hover {
+  transform: translateY(-4px) scale(1.025);
+
+  box-shadow:
+    0 23px 52px rgba(15, 23, 42, 0.18),
+    0 6px 18px rgba(99, 102, 241, 0.2);
+}
+
+/* 首页主标题 */
+main article.text-center > header h1 {
+  position: relative;
+
+  margin: 0 !important;
+
+  font-size: clamp(2.1rem, 4vw, 3rem) !important;
+  font-weight: 800 !important;
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+
+  color: var(--hj-title);
+
+  background: linear-gradient(
+    118deg,
+    var(--hj-title) 15%,
+    var(--hj-primary) 72%,
+    var(--hj-secondary) 100%
+  );
+
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* 首页副标题 */
+main article.text-center > header h2 {
+  max-width: 40rem;
+  margin-top: 0.65rem !important;
+
+  color: var(--hj-title-muted) !important;
+
+  font-size: clamp(1rem, 2vw, 1.28rem) !important;
+  font-weight: 500 !important;
+  line-height: 1.6;
+  letter-spacing: 0.025em;
+}
+
+/* ==================================================
+   文章页、文章列表页、分类页主标题
+   ================================================== */
+
+#single_header h1,
+main > header > h1 {
+  position: relative;
+
+  margin-top: 1.2rem !important;
+  padding-bottom: 0.95rem;
+
+  color: var(--hj-title) !important;
+
+  font-size: clamp(2rem, 4.2vw, 3.25rem) !important;
+  font-weight: 800 !important;
+  line-height: 1.18;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+/* 标题下面的蓝紫短线 */
+#single_header h1::after,
+main > header > h1::after {
+  content: "";
+  display: block;
+
+  width: 58px;
+  height: 4px;
+  margin-top: 0.85rem;
+
+  background: linear-gradient(
+    90deg,
+    var(--hj-primary),
+    var(--hj-secondary)
+  );
+
+  border-radius: 999px;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.18);
+}
+
+/* 标题下方的时间、阅读时长等信息 */
+#single_header .text-neutral-500,
+main > header .text-neutral-500 {
+  color: var(--hj-title-muted) !important;
+}
+
+/* ==================================================
+   首页最近文章和文章列表标题
+   ================================================== */
+
+.article-link--simple h2,
+.article-link--card h2 {
+  color: var(--hj-title);
+
+  font-size: clamp(1.08rem, 1.55vw, 1.32rem) !important;
+  font-weight: 700 !important;
+  line-height: 1.45;
+  letter-spacing: -0.018em;
+
+  transition:
+    color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.article-link--simple header a:hover,
+.article-link--card header a:hover {
+  text-decoration: none !important;
+}
+
+.article-link--simple:hover h2,
+.article-link--card:hover h2 {
+  color: var(--hj-primary);
+  transform: translateX(3px);
+}
+
+/* 摘要颜色更加柔和 */
+.article-link__summary {
+  color: var(--hj-title-muted);
+  line-height: 1.75;
+}
+
+/* ==================================================
+   文章正文标题层级
+   ================================================== */
+
+/* 二级标题 */
+.article-content h2 {
+  position: relative;
+
+  margin-top: 2.7em !important;
+  margin-bottom: 1em !important;
+  padding-left: 0.9rem;
+
+  color: var(--hj-title) !important;
+
+  font-size: clamp(1.55rem, 2.8vw, 1.85rem) !important;
+  font-weight: 750 !important;
+  line-height: 1.35;
+  letter-spacing: -0.025em;
+
+  border-left: 4px solid var(--hj-primary);
+}
+
+.article-content h2::after {
+  content: "";
+  display: block;
+
+  height: 1px;
+  margin-top: 0.7rem;
+
+  background: linear-gradient(
+    90deg,
+    var(--hj-title-line),
+    transparent 75%
+  );
+}
+
+/* 三级标题 */
+.article-content h3 {
+  position: relative;
+
+  margin-top: 2.1em !important;
+  margin-bottom: 0.85em !important;
+  padding-left: 1rem;
+
+  color: var(--hj-title) !important;
+
+  font-size: clamp(1.25rem, 2.2vw, 1.48rem) !important;
+  font-weight: 700 !important;
+  line-height: 1.42;
+  letter-spacing: -0.018em;
+}
+
+.article-content h3::before {
+  content: "";
+  position: absolute;
+  top: 0.58em;
+  left: 0;
+
+  width: 7px;
+  height: 7px;
+
+  background: var(--hj-secondary);
+  border-radius: 50%;
+
+  box-shadow: 0 0 0 4px rgba(8, 145, 178, 0.1);
+}
+
+/* 四级标题 */
+.article-content h4 {
+  margin-top: 1.7em !important;
+  margin-bottom: 0.7em !important;
+
+  color: var(--hj-title) !important;
+
+  font-size: 1.08rem !important;
+  font-weight: 700 !important;
+  line-height: 1.5;
+}
+
+/* 标题锚点继承标题颜色 */
+.article-content h2 a,
+.article-content h3 a,
+.article-content h4 a {
+  color: inherit !important;
+  text-decoration: none !important;
+}
