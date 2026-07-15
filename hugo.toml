@@ -1,4 +1,4 @@
-baseURL = 'https://example.org/'
+baseURL = 'https://huangjy-blog.pages.dev/'
 languageCode = 'zh-cn'
 title = '我的技术博客'
 theme = 'ananke'
