@@ -2682,3 +2682,107 @@ article.border:hover {
     display: none !important;
   }
 }
+
+/* ==================================================
+   最终背景修复：
+   不重复、不分段、不动画、不产生横向接缝
+   ================================================== */
+
+/* 清除之前通过伪元素创建的背景层 */
+body::before,
+body::after {
+  content: none !important;
+  display: none !important;
+  animation: none !important;
+}
+
+/* 页面基础底色 */
+html {
+  min-height: 100%;
+  background-color: #f6f7fb !important;
+}
+
+body {
+  height: auto !important;
+  min-height: 100vh !important;
+
+  /* 先清除之前所有背景 */
+  background: none !important;
+
+  /* 再设置唯一的一套背景 */
+  background-color: #f6f7fb !important;
+  background-image:
+    radial-gradient(
+      ellipse 900px 520px at 12% 0%,
+      rgba(99, 102, 241, 0.11) 0%,
+      rgba(99, 102, 241, 0.045) 42%,
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 760px 460px at 90% 2%,
+      rgba(14, 165, 233, 0.08) 0%,
+      rgba(14, 165, 233, 0.03) 45%,
+      transparent 74%
+    ) !important;
+
+  /*
+   * 每个渐变只绘制顶部900px。
+   * 超过900px后自动显示统一底色，不再重新开始。
+   */
+  background-size:
+    100% 900px,
+    100% 900px !important;
+
+  background-position:
+    top center,
+    top center !important;
+
+  background-repeat:
+    no-repeat,
+    no-repeat !important;
+
+  background-attachment: scroll !important;
+}
+
+/* 主题主体容器保持透明 */
+#the-top,
+main {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* 深色模式 */
+html.dark {
+  background-color: #10131a !important;
+}
+
+html.dark body {
+  background-color: #10131a !important;
+  background-image:
+    radial-gradient(
+      ellipse 900px 520px at 12% 0%,
+      rgba(99, 102, 241, 0.15) 0%,
+      rgba(99, 102, 241, 0.055) 42%,
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 760px 460px at 90% 2%,
+      rgba(6, 182, 212, 0.10) 0%,
+      rgba(6, 182, 212, 0.035) 45%,
+      transparent 74%
+    ) !important;
+
+  background-size:
+    100% 900px,
+    100% 900px !important;
+
+  background-position:
+    top center,
+    top center !important;
+
+  background-repeat:
+    no-repeat,
+    no-repeat !important;
+
+  background-attachment: scroll !important;
+}
