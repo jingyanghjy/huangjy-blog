@@ -3050,3 +3050,397 @@ html.dark .hj-term-card:hover {
     display: none;
   }
 }
+
+/* ==========================================================
+   分类内标签筛选
+   无持续动画，避免影响滚动性能
+   ========================================================== */
+
+.hj-category-filter {
+  margin: 1.8rem 0 2.3rem;
+  padding: 1.05rem 1.15rem;
+
+  background:
+    linear-gradient(
+      125deg,
+      rgba(255, 255, 255, 0.94),
+      rgba(245, 247, 255, 0.92)
+    );
+
+  border: 1px solid rgba(99, 102, 241, 0.14);
+  border-radius: 18px;
+
+  box-shadow:
+    0 10px 30px rgba(15, 23, 42, 0.055),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.hj-category-filter__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.9rem;
+}
+
+.hj-category-filter__eyebrow {
+  margin-bottom: 0.16rem;
+
+  color: #6366f1;
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+}
+
+.hj-category-filter__title {
+  margin: 0;
+
+  color: #172033;
+  font-size: 1.08rem;
+  font-weight: 750;
+  line-height: 1.3;
+}
+
+.hj-category-filter__status {
+  flex: 0 0 auto;
+
+  color: #8791a6;
+  font-size: 0.76rem;
+  white-space: nowrap;
+}
+
+.hj-category-filter__status strong {
+  color: #4f46e5;
+  font-size: 0.86rem;
+}
+
+.hj-category-filter__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.48rem;
+}
+
+.hj-filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.26rem;
+
+  min-height: 34px;
+  padding: 0.38rem 0.72rem;
+
+  color: #536079;
+  background: rgba(255, 255, 255, 0.7);
+
+  border: 1px solid rgba(100, 116, 139, 0.14);
+  border-radius: 999px;
+
+  font-size: 0.78rem;
+  font-weight: 620;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    color 0.18s ease,
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
+}
+
+.hj-filter-chip > span:last-child {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 19px;
+  height: 19px;
+  padding: 0 0.3rem;
+
+  color: #8490a6;
+  background: rgba(100, 116, 139, 0.08);
+  border-radius: 999px;
+
+  font-size: 0.66rem;
+  font-weight: 700;
+}
+
+.hj-filter-chip__hash {
+  color: #0891b2;
+  font-weight: 800;
+}
+
+.hj-filter-chip:hover {
+  color: #4338ca;
+  border-color: rgba(99, 102, 241, 0.28);
+
+  box-shadow:
+    0 6px 16px rgba(99, 102, 241, 0.09);
+
+  transform: translateY(-1px);
+}
+
+.hj-filter-chip.is-active {
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      110deg,
+      #4f46e5,
+      #7c3aed 55%,
+      #0891b2
+    );
+
+  border-color: rgba(99, 102, 241, 0.25);
+
+  box-shadow:
+    0 7px 18px rgba(79, 70, 229, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.hj-filter-chip.is-active .hj-filter-chip__hash {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.hj-filter-chip.is-active > span:last-child {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.hj-category-filter__tip {
+  margin: 0.72rem 0 0;
+
+  color: #8a94a8;
+  font-size: 0.7rem;
+}
+
+/* 文章列表 */
+.hj-category-results.is-list-view {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  width: 100%;
+}
+
+.hj-category-results.is-card-view {
+  display: grid;
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  width: 100%;
+}
+
+.hj-filter-item {
+  min-width: 0;
+}
+
+.hj-filter-item[hidden] {
+  display: none !important;
+}
+
+/* 无匹配结果 */
+.hj-filter-empty {
+  margin: 2rem 0;
+  padding: 2.4rem 1rem;
+
+  color: #78849a;
+  text-align: center;
+
+  background: rgba(255, 255, 255, 0.52);
+  border: 1px dashed rgba(99, 102, 241, 0.2);
+  border-radius: 18px;
+}
+
+.hj-filter-empty__icon {
+  margin-bottom: 0.4rem;
+
+  color: #6366f1;
+  font-size: 2rem;
+}
+
+.hj-filter-empty h3 {
+  margin: 0 0 0.28rem;
+
+  color: #334155;
+  font-size: 1rem;
+}
+
+.hj-filter-empty p {
+  margin: 0;
+  font-size: 0.78rem;
+}
+
+/* 深色模式 */
+html.dark .hj-category-filter {
+  background:
+    linear-gradient(
+      125deg,
+      rgba(25, 30, 44, 0.95),
+      rgba(19, 24, 37, 0.93)
+    );
+
+  border-color: rgba(129, 140, 248, 0.17);
+
+  box-shadow:
+    0 11px 32px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.045);
+}
+
+html.dark .hj-category-filter__title {
+  color: #e5e7eb;
+}
+
+html.dark .hj-filter-chip {
+  color: #bac4d5;
+  background: rgba(30, 36, 51, 0.82);
+  border-color: rgba(148, 163, 184, 0.13);
+}
+
+html.dark .hj-filter-chip:hover {
+  color: #e0e7ff;
+  border-color: rgba(129, 140, 248, 0.27);
+}
+
+html.dark .hj-filter-empty {
+  color: #94a3b8;
+  background: rgba(24, 29, 42, 0.65);
+  border-color: rgba(129, 140, 248, 0.18);
+}
+
+html.dark .hj-filter-empty h3 {
+  color: #e2e8f0;
+}
+
+@media (max-width: 768px) {
+  .hj-category-filter__header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .hj-category-results.is-card-view {
+    grid-template-columns: 1fr;
+  }
+
+  .hj-filter-chip {
+    min-height: 32px;
+    padding: 0.35rem 0.62rem;
+    font-size: 0.74rem;
+  }
+}
+/* 分类颜色加深，标签保持主题默认样式 */
+main article a[href*="/categories/"],
+#single_header a[href*="/categories/"] {
+  color: #3730a3 !important;
+  background-color: rgba(79, 70, 229, 0.16) !important;
+  border-color: rgba(79, 70, 229, 0.42) !important;
+}
+
+/* 分类悬停 */
+main article a[href*="/categories/"]:hover,
+#single_header a[href*="/categories/"]:hover {
+  color: #ffffff !important;
+  background-color: #4f46e5 !important;
+  border-color: #4f46e5 !important;
+}
+
+/* 深色模式 */
+html.dark main article a[href*="/categories/"],
+html.dark #single_header a[href*="/categories/"] {
+  color: #e0e7ff !important;
+  background-color: rgba(99, 102, 241, 0.32) !important;
+  border-color: rgba(165, 180, 252, 0.48) !important;
+}
+
+/* ==========================================================
+   标签页图标优化
+   使用简洁的 Tag 图标替代大号 #
+   ========================================================== */
+
+/* 仅修改标签页面，不影响分类图标 */
+.hj-term-card[href*="/tags/"] .hj-term-card__icon {
+  position: relative;
+  flex: 0 0 auto;
+
+  width: 36px !important;
+  height: 36px !important;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(99, 102, 241, 0.1),
+      rgba(14, 165, 233, 0.08)
+    ) !important;
+
+  border: 1px solid rgba(99, 102, 241, 0.14) !important;
+  border-radius: 11px !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.72) !important;
+}
+
+/* 删除原来的 # */
+.hj-term-card[href*="/tags/"]
+.hj-term-card__icon::before {
+  content: "" !important;
+
+  width: 18px;
+  height: 18px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #6366f1,
+      #7c3aed 50%,
+      #0891b2
+    );
+
+  /*
+   * 使用 SVG Mask 绘制标签图标，
+   * 不依赖外部图片或字体。
+   */
+  -webkit-mask:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M2.25 12.76V5.25a3 3 0 0 1 3-3h7.51a3 3 0 0 1 2.12.88l6 6a3 3 0 0 1 0 4.24l-7.51 7.51a3 3 0 0 1-4.24 0l-6-6a3 3 0 0 1-.88-2.12Zm6-5.26a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z'/%3E%3C/svg%3E")
+    center / contain no-repeat;
+
+  mask:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M2.25 12.76V5.25a3 3 0 0 1 3-3h7.51a3 3 0 0 1 2.12.88l6 6a3 3 0 0 1 0 4.24l-7.51 7.51a3 3 0 0 1-4.24 0l-6-6a3 3 0 0 1-.88-2.12Zm6-5.26a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z'/%3E%3C/svg%3E")
+    center / contain no-repeat;
+}
+
+/* 防止旧样式生成额外内容 */
+.hj-term-card[href*="/tags/"]
+.hj-term-card__icon::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* 悬停时轻微加强，不做持续动画 */
+.hj-term-card[href*="/tags/"]:hover
+.hj-term-card__icon {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(99, 102, 241, 0.16),
+      rgba(14, 165, 233, 0.12)
+    ) !important;
+
+  border-color: rgba(99, 102, 241, 0.26) !important;
+}
+
+/* 深色模式 */
+html.dark
+.hj-term-card[href*="/tags/"]
+.hj-term-card__icon {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(129, 140, 248, 0.14),
+      rgba(34, 211, 238, 0.08)
+    ) !important;
+
+  border-color: rgba(129, 140, 248, 0.18) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+}

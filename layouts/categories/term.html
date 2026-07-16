@@ -1,0 +1,149 @@
+{{ define "main" }}
+  {{ .Scratch.Set "scope" "term" }}
+
+  {{ $showHero := .Params.showHero | default site.Params.term.showHero | default false }}
+  {{ if $showHero }}
+    {{ $heroStyle := print "hero/" site.Params.term.heroStyle ".html" }}
+    {{ if templates.Exists (printf "partials/%s" $heroStyle) }}
+      {{ partial $heroStyle . }}
+    {{ else }}
+      {{ partial "hero/basic.html" . }}
+    {{ end }}
+  {{ end }}
+
+  <header class="mt-5">
+    {{ if .Params.showBreadcrumbs | default (site.Params.term.showBreadcrumbs | default false) }}
+      {{ partial "breadcrumbs.html" . }}
+    {{ end }}
+
+    <h1 class="mt-5 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+      {{ .Title }}
+    </h1>
+
+    <div class="mt-1 mb-2 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
+      {{ partial "article-meta/term.html" (dict "context" . "scope" "single") }}
+    </div>
+  </header>
+
+  {{ if .Content }}
+    <section class="flex flex-col max-w-full mt-0 mb-5 prose dark:prose-invert">
+      <div class="min-w-0 min-h-0 max-w-prose">
+        {{ .Content }}
+      </div>
+    </section>
+  {{ end }}
+
+  {{/* 当前分类下的所有文章 */}}
+  {{ $pages := .Pages.ByDate.Reverse }}
+
+  {{/* 收集当前分类中实际使用过的标签 */}}
+  {{ $tags := slice }}
+
+  {{ range $pages }}
+    {{ range (.Params.tags | default (slice)) }}
+      {{ $tags = $tags | append . }}
+    {{ end }}
+  {{ end }}
+
+  {{ $tags = sort (uniq $tags) }}
+
+  {{ if gt (len $pages) 0 }}
+
+    {{ if gt (len $tags) 0 }}
+      <section
+        class="hj-category-filter"
+        data-category-filter
+        aria-label="文章标签筛选"
+      >
+        <div class="hj-category-filter__header">
+          <div>
+            <div class="hj-category-filter__eyebrow">
+              FILTER
+            </div>
+
+            <h2 class="hj-category-filter__title">
+              按标签筛选
+            </h2>
+          </div>
+
+          <div class="hj-category-filter__status">
+            显示
+            <strong data-visible-count>{{ len $pages }}</strong>
+            /
+            <span>{{ len $pages }}</span>
+            篇
+          </div>
+        </div>
+
+        <div class="hj-category-filter__chips">
+          <button
+            type="button"
+            class="hj-filter-chip is-active"
+            data-tag=""
+            aria-pressed="true"
+          >
+            全部
+            <span>{{ len $pages }}</span>
+          </button>
+
+          {{ range $tag := $tags }}
+            {{ $tagPages := where $pages "Params.tags" "intersect" (slice $tag) }}
+
+            <button
+              type="button"
+              class="hj-filter-chip"
+              data-tag="{{ $tag }}"
+              aria-pressed="false"
+            >
+              <span class="hj-filter-chip__hash">#</span>
+              {{ $tag }}
+              <span>{{ len $tagPages }}</span>
+            </button>
+          {{ end }}
+        </div>
+
+        <p class="hj-category-filter__tip">
+          支持多选，文章需要同时包含所选标签。
+        </p>
+      </section>
+    {{ end }}
+
+    {{ $cardView := .Params.cardView | default (site.Params.term.cardView | default false) }}
+
+    <section
+      id="hj-category-results"
+      class="hj-category-results {{ if $cardView }}is-card-view{{ else }}is-list-view{{ end }}"
+    >
+      {{ range $pages }}
+        <div
+          class="hj-filter-item"
+          data-tags="{{ delimit (.Params.tags | default (slice)) "||" }}"
+        >
+          {{ if $cardView }}
+            {{ partial "article-link/card.html" . }}
+          {{ else }}
+            {{ partial "article-link/simple.html" . }}
+          {{ end }}
+        </div>
+      {{ end }}
+    </section>
+
+    <div id="hj-filter-empty" class="hj-filter-empty" hidden>
+      <div class="hj-filter-empty__icon">⌁</div>
+      <h3>没有匹配的文章</h3>
+      <p>当前分类中没有同时包含这些标签的文章。</p>
+    </div>
+
+  {{ else }}
+    <section class="mt-10 prose dark:prose-invert">
+      <p class="py-8 border-t">
+        <em>{{ i18n "term.no_articles" | emojify }}</em>
+      </p>
+    </section>
+  {{ end }}
+
+  {{ with resources.Get "js/category-filter.js" }}
+    {{ $script := . | minify | fingerprint }}
+    <script defer src="{{ $script.RelPermalink }}"></script>
+  {{ end }}
+{{ end }}
