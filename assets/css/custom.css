@@ -2588,3 +2588,97 @@ ul ul
 a:not(.active) {
   color: rgb(122, 136, 157) !important;
 }
+
+/* ==================================================
+   性能优化：保留风格，去掉高负载持续动画
+   ================================================== */
+
+/* 1. 背景保留柔光，但不再持续移动 */
+body::before {
+  animation: none !important;
+
+  background:
+    radial-gradient(
+      42rem 32rem at 10% 5%,
+      rgba(99, 102, 241, 0.13),
+      transparent 72%
+    ),
+    radial-gradient(
+      38rem 30rem at 90% 12%,
+      rgba(14, 165, 233, 0.09),
+      transparent 72%
+    ),
+    radial-gradient(
+      34rem 28rem at 60% 92%,
+      rgba(168, 85, 247, 0.06),
+      transparent 75%
+    ) !important;
+}
+
+/* 2. 删除全屏动态颗粒，通常肉眼价值不大 */
+body::after {
+  display: none !important;
+}
+
+/* 3. 固定背景在滚动时可能增加重绘 */
+html:not(.dark) body,
+html.dark body {
+  background-attachment: scroll !important;
+}
+
+/* 4. 头像保留渐变边框和悬浮效果，但不持续呼吸 */
+main article.text-center > header img.rounded-full {
+  animation: none !important;
+}
+
+main article.text-center > header img.rounded-full:hover {
+  transform: translateY(-4px) scale(1.025);
+}
+
+/* 5. 标题保留渐变，但停止持续流动 */
+main article.text-center > header h1 {
+  animation: none !important;
+  background-position: 50% 50% !important;
+}
+
+/* 6. 导航毛玻璃模糊降低 */
+#menu-blur {
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+/* 7. 悬浮按钮面积小，不需要实时背景模糊 */
+#reader-tools > button,
+#fixed-toc-toggle,
+#nav-visibility-toggle {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* 8. 保留文章卡片上浮，但减少阴影计算量 */
+.article-link--simple:hover,
+.article-link--card:hover,
+article.border:hover {
+  transform: translateY(-4px) !important;
+
+  box-shadow:
+    0 14px 34px rgba(15, 23, 42, 0.09),
+    0 3px 10px rgba(99, 102, 241, 0.07) !important;
+}
+
+/* 9. 小屏设备进一步减少装饰效果 */
+@media (max-width: 768px) {
+  body::before {
+    background:
+      radial-gradient(
+        32rem 24rem at 15% 5%,
+        rgba(99, 102, 241, 0.09),
+        transparent 72%
+      ) !important;
+  }
+
+  .article-link--simple::after,
+  .article-link--card::after {
+    display: none !important;
+  }
+}
