@@ -42,6 +42,9 @@ mainSections = ["posts"]
   showPagination = true
   showZenMode = true
   showAuthor = true
+  showCategories  = true
+  showTags  = true
+  showCategoriesInSecondaryColor  = true
 
 [list]
   showHero = false
@@ -59,8 +62,11 @@ mainSections = ["posts"]
 
 [taxonomy]
   showTermCount = true
-  cardView = true
+  cardView = false
+  showBreadcrumbs = true
 
 [term]
   groupByYear = false
-  cardView = true
+  cardView = false
+  cardViewScreenWidth = false
+  showBreadcrumbs = true

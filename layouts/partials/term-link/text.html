@@ -1,0 +1,22 @@
+<a
+  class="hj-term-card"
+  href="{{ .Page.RelPermalink }}"
+  aria-label="{{ .Page.Title }}，共 {{ .Count }} 篇文章"
+>
+  <span class="hj-term-card__icon" aria-hidden="true"></span>
+
+  <span class="hj-term-card__name">
+    {{ .Page.Title | emojify }}
+  </span>
+
+  {{ if site.Params.taxonomy.showTermCount | default true }}
+    <span class="hj-term-card__count">
+      <strong>{{ .Count }}</strong>
+      <small>篇</small>
+    </span>
+  {{ end }}
+
+  <span class="hj-term-card__arrow" aria-hidden="true">
+    →
+  </span>
+</a>

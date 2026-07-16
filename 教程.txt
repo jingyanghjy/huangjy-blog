@@ -22,3 +22,26 @@
 			→ Cloudflare检测到新提交
 			→ 自动运行Hugo
 			→ 自动发布新网站
+			
+
+
+删除文章
+	git删除：
+		git rm .\content\posts\hello-world.md
+		
+	然后提交并推送：
+		git commit -m "Delete hello world article"
+		git push origin main
+		
+
+如何使用分类和标签
+	在文章顶部添加：
+date = '2026-07-15T11:49:41+08:00'
+draft = false
+title = 'Linux MFD子系统分析'
+summary = "介绍MFD子系统的作用、设备注册流程和驱动实现方法"
+categories = ["电源管理"]
+tags = ["MFD子系统","驱动分析"]
+		
+	
+	所有分类和标签
