@@ -21,7 +21,7 @@ tags = ["Android","Android13", "Wi-Fi", "Scan"]
 
 联网后 ping 一个地址，发现每隔十个包左右就会出现一次大延迟，呈周期性。
 
-![image-20260723111008137](./src/image-20260723111008137.png)
+![image-20260723111008137](/images/android-wifi-scan/image-20260723111008137.png)
 
 ## 3. 结果
 
@@ -45,7 +45,7 @@ Wi-Fi 的扫描场景分为下面四种情况：
 
 **文件都有SCAN_INTERVAL_MILLIS 变量：**
 
-![image-20260723110953855](./src/image-20260723110953855.png)
+![image-20260723110953855](/images/android-wifi-scan/image-20260723110953855.png)
 
 `SCAN_INTERVAL_MILLIS = 10`，所以在 Wi-Fi 设置界面的 scan 周期为 10。
 
@@ -61,7 +61,7 @@ public static final int WIFI_STATE_DISCONNECTED = 2;
 public static final int WIFI_STATE_TRANSITIONING = 3;
 ```
 
-![image-20260723110931905](./src/image-20260723110931905.png)
+![image-20260723110931905](/images/android-wifi-scan/image-20260723110931905.png)
 
 可以知道，当自动漫游没有被关闭的时候，屏幕开启之后，有连接依旧进行周期 scan。
 
@@ -73,6 +73,6 @@ public static final int WIFI_STATE_TRANSITIONING = 3;
 
 客户想要在有连接的情况下退出WIFI settings界面不进行 scan，对应第二种情况：亮屏情况下，在非 Wi-Fi settings 界面
 
-![image-20260723110914641](./src/image-20260723110914641.png)
+![image-20260723110914641](/images/android-wifi-scan/image-20260723110914641.png)
 
 直接去除了自动漫游的判断，只要一有连接就直接返回。也可以在系统手动关闭漫游开关。
