@@ -1,12 +1,13 @@
 +++
+
 date = '2026-07-16T15:08:06+08:00'
 draft = false
 title = 'Andorid wifi scan导致周期性出现延迟问题分析'
 summary = "分析在Android13下wifi sacn机制"
 categories = ["系统问题分析"]
-tags = ["Android","Android13", "Wi-Fi"]
+tags = ["Android","Android13", "Wi-Fi", "Scan"]
 
-------
++++
 
 ## 1. 环境
 
