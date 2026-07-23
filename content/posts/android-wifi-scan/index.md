@@ -5,7 +5,7 @@ draft = false
 title = 'Andorid wifi scan导致周期性出现延迟问题分析'
 summary = "分析在Android13下wifi sacn机制"
 categories = ["问题分析"]
-tags = ["全志","a527","Android", "Wi-Fi", "Scan"]
+tags = ["全志","A527","Wi-Fi", "Android","信号延迟"]
 
 +++
 

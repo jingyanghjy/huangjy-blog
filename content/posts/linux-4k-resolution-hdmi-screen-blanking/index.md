@@ -5,7 +5,7 @@ draft = false
 title = 'HDMI 4k分辨率下显示花屏问题分析'
 summary = "分析4K hdmi分辨率下花屏问题"
 categories = ["问题分析"]
-tags = ["全志","a527","显示", "HDMI", "花屏"]
+tags = ["全志","A527","显示", "HDMI", "花屏"]
 
 +++
 
