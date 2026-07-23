@@ -3499,3 +3499,14 @@ main > section {
 .hj-term-card:hover {
   transform: translateY(-2px) !important;
 }
+
+.hj-search-highlight {
+  border-radius: 0.2rem;
+  background: rgba(250, 204, 21, 0.55);
+  color: inherit;
+  padding: 0 0.12em;
+}
+
+html.dark .hj-search-highlight {
+  background: rgba(250, 204, 21, 0.35);
+}

@@ -179,6 +179,11 @@
   })();
 </script>
 
+{{ with resources.Get "js/search-redirect.js" }}
+  {{ $script := . | minify | fingerprint }}
+  <script defer src="{{ $script.RelPermalink }}"></script>
+{{ end }}
+
 <!-- 悬浮文章目录 -->
 <button
   id="floating-toc-button"
