@@ -1,12 +1,18 @@
+{{ $tagAliases := hugo.Data.tag_aliases | default dict }}
+{{ $termTitle := .Page.Title }}
+{{ if eq .Page.Data.Singular "tag" }}
+  {{ $termTitle = index $tagAliases (lower .Page.Title) | default .Page.Title }}
+{{ end }}
+
 <a
   class="hj-term-card"
   href="{{ .Page.RelPermalink }}"
-  aria-label="{{ .Page.Title }}，共 {{ .Count }} 篇文章"
+  aria-label="{{ $termTitle }}，共 {{ .Count }} 篇文章"
 >
   <span class="hj-term-card__icon" aria-hidden="true"></span>
 
   <span class="hj-term-card__name">
-    {{ .Page.Title | emojify }}
+    {{ $termTitle | emojify }}
   </span>
 
   {{ if site.Params.taxonomy.showTermCount | default true }}

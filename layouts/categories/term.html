@@ -35,21 +35,22 @@
 
   {{/* 当前分类下的所有文章 */}}
   {{ $pages := .Pages.ByDate.Reverse }}
+  {{ $tagAliases := hugo.Data.tag_aliases | default dict }}
 
   {{/* 收集当前分类中实际使用过的标签 */}}
-  {{ $tags := slice }}
+  {{ $tagKeys := slice }}
 
   {{ range $pages }}
     {{ range (.Params.tags | default (slice)) }}
-      {{ $tags = $tags | append . }}
+      {{ $tagKeys = $tagKeys | append (lower .) }}
     {{ end }}
   {{ end }}
 
-  {{ $tags = sort (uniq $tags) }}
+  {{ $tagKeys = sort (uniq $tagKeys) }}
 
   {{ if gt (len $pages) 0 }}
 
-    {{ if gt (len $tags) 0 }}
+    {{ if gt (len $tagKeys) 0 }}
       <section
         class="hj-category-filter"
         data-category-filter
@@ -86,9 +87,20 @@
             <span>{{ len $pages }}</span>
           </button>
 
-          {{ range $tag := $tags }}
-            {{ $tagPages := where $pages "Params.tags" "intersect" (slice $tag) }}
-            {{ $tagKey := lower $tag }}
+          {{ range $tagKey := $tagKeys }}
+            {{ $tag := index $tagAliases $tagKey | default $tagKey }}
+            {{ $tagCount := 0 }}
+            {{ range $pages }}
+              {{ $matchedTag := false }}
+              {{ range (.Params.tags | default (slice)) }}
+                {{ if eq (lower .) $tagKey }}
+                  {{ $matchedTag = true }}
+                {{ end }}
+              {{ end }}
+              {{ if $matchedTag }}
+                {{ $tagCount = add $tagCount 1 }}
+              {{ end }}
+            {{ end }}
 
             <button
               type="button"
@@ -99,7 +111,7 @@
             >
               <span class="hj-filter-chip__hash">#</span>
               {{ $tag }}
-              <span>{{ len $tagPages }}</span>
+              <span>{{ $tagCount }}</span>
             </button>
           {{ end }}
         </div>
@@ -117,14 +129,17 @@
       class="hj-category-results {{ if $cardView }}is-card-view{{ else }}is-list-view{{ end }}"
     >
       {{ range $pages }}
+        {{ $displayTags := slice }}
         {{ $itemTags := slice }}
         {{ range (.Params.tags | default (slice)) }}
-          {{ $itemTags = $itemTags | append (lower .) }}
+          {{ $itemTagKey := lower . }}
+          {{ $displayTags = $displayTags | append (index $tagAliases $itemTagKey | default .) }}
+          {{ $itemTags = $itemTags | append $itemTagKey }}
         {{ end }}
 
         <div
           class="hj-filter-item"
-          data-tags="{{ delimit (.Params.tags | default (slice)) "||" }}"
+          data-tags="{{ delimit $displayTags "||" }}"
           data-tag-keys="{{ delimit $itemTags "||" }}"
         >
           {{ if $cardView }}
