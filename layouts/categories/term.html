@@ -88,11 +88,13 @@
 
           {{ range $tag := $tags }}
             {{ $tagPages := where $pages "Params.tags" "intersect" (slice $tag) }}
+            {{ $tagKey := lower $tag }}
 
             <button
               type="button"
               class="hj-filter-chip"
               data-tag="{{ $tag }}"
+              data-tag-key="{{ $tagKey }}"
               aria-pressed="false"
             >
               <span class="hj-filter-chip__hash">#</span>
@@ -115,9 +117,15 @@
       class="hj-category-results {{ if $cardView }}is-card-view{{ else }}is-list-view{{ end }}"
     >
       {{ range $pages }}
+        {{ $itemTags := slice }}
+        {{ range (.Params.tags | default (slice)) }}
+          {{ $itemTags = $itemTags | append (lower .) }}
+        {{ end }}
+
         <div
           class="hj-filter-item"
           data-tags="{{ delimit (.Params.tags | default (slice)) "||" }}"
+          data-tag-keys="{{ delimit $itemTags "||" }}"
         >
           {{ if $cardView }}
             {{ partial "article-link/card.html" . }}

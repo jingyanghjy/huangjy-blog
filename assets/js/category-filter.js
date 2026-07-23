@@ -21,10 +21,14 @@
   
       const emptyState =
         document.getElementById("hj-filter-empty");
+
+      function normalizeTag(tag) {
+        return String(tag || "").trim().toLocaleLowerCase();
+      }
   
       const availableTags = new Set(
         buttons
-          .map((button) => button.dataset.tag || "")
+          .map((button) => normalizeTag(button.dataset.tagKey || button.dataset.tag))
           .filter(Boolean)
       );
   
@@ -39,23 +43,25 @@
       initialUrl.searchParams
         .getAll("tag")
         .forEach((tag) => {
-          if (availableTags.has(tag)) {
-            selectedTags.add(tag);
+          const normalizedTag = normalizeTag(tag);
+
+          if (availableTags.has(normalizedTag)) {
+            selectedTags.add(normalizedTag);
           }
         });
   
       function getItemTags(item) {
-        const rawTags = item.dataset.tags || "";
+        const rawTags = item.dataset.tagKeys || item.dataset.tags || "";
   
         return rawTags
           .split("||")
-          .map((tag) => tag.trim())
+          .map((tag) => normalizeTag(tag))
           .filter(Boolean);
       }
   
       function updateButtons() {
         buttons.forEach((button) => {
-          const tag = button.dataset.tag || "";
+          const tag = normalizeTag(button.dataset.tagKey || button.dataset.tag);
   
           const active = tag
             ? selectedTags.has(tag)
@@ -120,7 +126,7 @@
   
       buttons.forEach((button) => {
         button.addEventListener("click", () => {
-          const tag = button.dataset.tag || "";
+          const tag = normalizeTag(button.dataset.tagKey || button.dataset.tag);
   
           if (!tag) {
             selectedTags.clear();
