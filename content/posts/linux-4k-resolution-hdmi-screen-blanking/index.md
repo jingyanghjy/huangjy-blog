@@ -2,10 +2,10 @@
 
 date = '2026-07-16T15:08:06+08:00'
 draft = false
-title = 'hdmi 4k分辨率下显示花屏问题分析'
+title = 'HDMI 4k分辨率下显示花屏问题分析'
 summary = "分析4K hdmi分辨率下花屏问题"
-categories = ["驱动问题分析"]
-tags = ["linux","显示", "HDMI", "花屏"]
+categories = ["问题分析"]
+tags = ["全志","a527","显示", "HDMI", "花屏"]
 
 +++
 
